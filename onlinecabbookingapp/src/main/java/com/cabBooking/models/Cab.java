@@ -12,9 +12,8 @@ import lombok.ToString;
 
 @Entity
 @AllArgsConstructor
-@Data
 @NoArgsConstructor
-@ToString
+@Data
 public class Cab {
 
 	
@@ -23,8 +22,5 @@ public class Cab {
 	private Integer cabId;
 	private String	cabType;
 	private Float	perKmRate;
-	
-	public Cab() {
-		// TODO Auto-generated constructor stub
-	}
+
 }
