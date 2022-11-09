@@ -5,25 +5,31 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class Cab {
+@Entity
+public class TripBooking {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer cabId;
-	private String cabType;
-	private Float perKmRate;
-
-	@OneToOne(cascade = CascadeType.ALL)
+	private Integer tripBookingId;
+	private Integer customerId;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Driver driver;
+	private String fromLocation;
+	private String toLocation;
+	private boolean status;
+	private Float distanceInKm;
+	private Float bill;
+	
+	
+	
 }
