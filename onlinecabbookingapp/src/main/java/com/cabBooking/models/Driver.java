@@ -12,18 +12,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class Cab {
+@Entity
+public class Driver {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer cabId;
-	private String cabType;
-	private Float perKmRate;
+	private Integer driverId;
+	private String liscenceNo;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	private Driver driver;
+	private Cab cab;
+	private Float rating;
+
+	
 }
