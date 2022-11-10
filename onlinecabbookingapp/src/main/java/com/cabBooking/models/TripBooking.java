@@ -30,7 +30,7 @@ public class TripBooking {
 	private Integer tripBookingId;
 	private Integer customerId;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Driver driver;
 	private String fromLocation;
 	private String toLocation;

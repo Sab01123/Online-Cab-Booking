@@ -2,6 +2,7 @@ package com.cabBooking.services;
 
 import java.util.List;
 
+import com.cabBooking.exceptions.CustomerNotFound;
 import com.cabBooking.exceptions.TripBookingException;
 import com.cabBooking.models.TripBooking;
 
@@ -16,5 +17,5 @@ public interface ITripBookingService {
 	public TripBooking deleteTripBooking(int tripBookingId) throws TripBookingException;
 
 
-//	public List<TripBooking> viewAllTripsCustomer(int customerId) throws CustomerException;
+	public List<TripBooking> viewAllTripsCustomer(int customerId) throws CustomerNotFound;
 }

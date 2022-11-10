@@ -34,8 +34,12 @@ public class Driver {
 	private Float rating;
 	
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "driver")
+	@OneToMany(mappedBy = "driver")
 	Set<TripBooking> tripBooking = new HashSet<>();
+
+	public Integer getDriverId() {
+		return driverId;
+	}
 
 	public Set<TripBooking> getTripBooking() {
 		return tripBooking;
