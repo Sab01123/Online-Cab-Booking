@@ -1,13 +1,28 @@
 package com.cabBooking.services;
 
+import com.cabBooking.exceptions.AdminExceptions;
 import com.cabBooking.models.Admin;
+import com.cabBooking.models.TripBooking;
+
+import java.time.LocalDate;
+import java.util.List;
 
 public interface AdminService {
 
-	public Admin saveAdmin(Admin admin);
+	public Admin insertAdmin(Admin admin) throws AdminExceptions;
 
-	public Admin update(Admin admin);
+	public Admin updateAdmin(Admin admin) throws AdminExceptions;
 
-	public Admin delete(Integer id);
+	public Admin deleteAdmin(Integer id) throws AdminExceptions;
+
+	public List<TripBooking> getAllTrips(Integer customerid) throws AdminExceptions;
+
+	public List<TripBooking> getTripsCabwise();
+
+	public List<TripBooking> getTripsCustomerwise();
+
+	public List<TripBooking> getTripsDatewise() throws AdminExceptions;
+
+	public List<TripBooking> getAllTripsForDays(Integer customerId, LocalDate date) throws AdminExceptions;
 
 }
