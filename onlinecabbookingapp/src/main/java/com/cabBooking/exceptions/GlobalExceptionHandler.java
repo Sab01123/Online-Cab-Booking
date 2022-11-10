@@ -11,29 +11,31 @@ import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<MyErrorDetail> myMNVEHandler(MethodArgumentNotValidException me) {
-
-		MyErrorDetail err = new MyErrorDetail();
-
-		err.setTimestamp(LocalDateTime.now());
-		err.setMessage("Valadition Error");
-		err.setDescription(me.getBindingResult().getFieldError().getDefaultMessage());
-
-		return new ResponseEntity<MyErrorDetail>(err, HttpStatus.BAD_REQUEST);
-
-	}
-
-	@ExceptionHandler(DriverException.class)
-	public ResponseEntity<MyErrorDetail> productExceptionHandler(DriverException pe, WebRequest req) {
+	
+	@ExceptionHandler(CabException.class)
+	public ResponseEntity<MyErrorDetail>  cabException(CabException me,WebRequest web) {
 
 		MyErrorDetail err = new MyErrorDetail();
 
 		err.setTimestamp(LocalDateTime.now());
-		err.setMessage(pe.getMessage());
-		err.setDescription(req.getDescription(false));
+		err.setMessage(me.getMessage());
+		err.setDescription(web.getDescription(false));
+
 		return new ResponseEntity<MyErrorDetail>(err, HttpStatus.BAD_REQUEST);
+
+
 	}
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<MyErrorDetail>  IllegalArguException(IllegalArgumentException me,WebRequest web) {
+
+		MyErrorDetail err = new MyErrorDetail();
+
+		err.setTimestamp(LocalDateTime.now());
+		err.setMessage(me.getMessage());
+		err.setDescription(web.getDescription(false));
+
+		return new ResponseEntity<MyErrorDetail>(err, HttpStatus.BAD_REQUEST);
+
+
 
 }
