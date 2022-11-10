@@ -62,14 +62,14 @@ public ResponseEntity<MyErrorDetail> customerNotFoundHandler (CustomerNotFound c
 			
 		}
 	
-	@ExceptionHandler(TripBookingException.class)
-	public ResponseEntity<MyErrorDetail> tripBookingExceptionHandler(TripBookingException tbe, WebRequest wr){
-		
-		MyErrorDetail med = new MyErrorDetail(LocalDateTime.now(), tbe.getMessage(), wr.getDescription(false));
-	
-	
-		return new ResponseEntity<MyErrorDetail>(med, HttpStatus.BAD_REQUEST);
-	}
-	
+//	@ExceptionHandler(TripBookingException.class)
+//	public ResponseEntity<MyErrorDetail> tripBookingExceptionHandler(TripBookingException tbe, WebRequest wr){
+//		
+//		MyErrorDetail med = new MyErrorDetail(LocalDateTime.now(), tbe.getMessage(), wr.getDescription(false));
+//	
+//	
+//		return new ResponseEntity<MyErrorDetail>(med, HttpStatus.BAD_REQUEST);
+//	}
+//	
 	
 }
