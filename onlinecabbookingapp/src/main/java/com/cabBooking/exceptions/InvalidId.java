@@ -1,16 +1,11 @@
 package com.cabBooking.exceptions;
 
-public class InvalidId extends RuntimeException {
+public class InValidId extends Exception {
 
-	public InvalidId() {
-		super();
-		// TODO Auto-generated constructor stub
+	public InValidId() {
+		
 	}
-
-	public InvalidId(String message) {
+	public InValidId(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
-
 }
-
