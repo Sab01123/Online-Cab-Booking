@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 
 
 
@@ -26,6 +27,16 @@ public ResponseEntity<MyErrorDetail>  myMNVEHandler(MethodArgumentNotValidExcept
 		return new ResponseEntity<MyErrorDetail>(err, HttpStatus.BAD_REQUEST);
 		
 		
+	}
+	
+	
+	@ExceptionHandler(TripBookingException.class)
+	public ResponseEntity<MyErrorDetail> tripBookingExceptionHandler(TripBookingException tbe, WebRequest wr){
+		
+		MyErrorDetail med = new MyErrorDetail(LocalDateTime.now(), tbe.getMessage(), wr.getDescription(false));
+	
+	
+		return new ResponseEntity<MyErrorDetail>(med, HttpStatus.BAD_REQUEST);
 	}
 	
 	
