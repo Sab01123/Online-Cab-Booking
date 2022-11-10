@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.cabBooking.services.UserLogIn;
 
-import com.cabBooking.services.UserLogInImpl;
 
 
 @RestController
 public class LoginController {
 
 	@Autowired
-	private UserLogInImpl userLogIn;
+	private UserLogIn userLogIn;
 
 	// for user Login
 //	@PostMapping(value = "/login")
