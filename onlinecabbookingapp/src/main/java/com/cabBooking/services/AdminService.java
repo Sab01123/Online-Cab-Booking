@@ -8,7 +8,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface AdminService {
-
+	
+	public Admin LoginAdmin(Admin admin) throws AdminExceptions;
+	
 	public Admin insertAdmin(Admin admin) throws AdminExceptions;
 
 	public Admin updateAdmin(Admin admin) throws AdminExceptions;
