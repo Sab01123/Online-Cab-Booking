@@ -41,5 +41,33 @@ public ResponseEntity<MyErrorDetail>  myMNVEHandler(MethodArgumentNotValidExcept
 	
 	
 	
+	@ExceptionHandler(CustomerNotFound.class)
+public ResponseEntity<MyErrorDetail> customerNotFoundHandler (CustomerNotFound cf , WebRequest wr) {
+		
+		MyErrorDetail err = new MyErrorDetail();
+		
+		err.setTimestamp(LocalDateTime.now());
+		err.setMessage(cf.getMessage());
+		err.setDescription(wr.getDescription(false));
+		
+		return new ResponseEntity<MyErrorDetail>(err, HttpStatus.BAD_REQUEST);
+		
+		
+	}
+	
+	@ExceptionHandler(InValidId.class)
+	public ResponseEntity<MyErrorDetail> inValidIdHandler ( InValidId id, WebRequest wr) {
+			
+			MyErrorDetail err = new MyErrorDetail();
+			
+			err.setTimestamp(LocalDateTime.now());
+			err.setMessage(id.getMessage());
+			err.setDescription(wr.getDescription(false));
+			
+			return new ResponseEntity<MyErrorDetail>(err, HttpStatus.BAD_REQUEST);
+			
+			
+		}
+	
 	
 }
