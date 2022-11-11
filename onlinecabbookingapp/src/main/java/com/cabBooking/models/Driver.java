@@ -20,7 +20,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-//@Data
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -33,8 +33,8 @@ public class Driver extends AbstractUser {
 
 	private String liscenceNo;
 
-//	@OneToOne(cascade = CascadeType.ALL)
-//	private Cab cab;
+	@OneToOne(cascade = CascadeType.ALL)
+	private Cab cab;
 	private Float rating;
 
 	@JsonIgnore
@@ -59,6 +59,8 @@ public class Driver extends AbstractUser {
 		this.rating = rating;
 	}
 
+
+	
 	public Integer getDriverId() {
 		return driverId;
 	}
@@ -73,6 +75,14 @@ public class Driver extends AbstractUser {
 
 	public void setLiscenceNo(String liscenceNo) {
 		this.liscenceNo = liscenceNo;
+	}
+
+	public Cab getCab() {
+		return cab;
+	}
+
+	public void setCab(Cab cab) {
+		this.cab = cab;
 	}
 
 	public Float getRating() {
@@ -90,6 +100,8 @@ public class Driver extends AbstractUser {
 	public void setTripBooking(Set<TripBooking> tripBooking) {
 		this.tripBooking = tripBooking;
 	}
+
+	
 	
 	
 
