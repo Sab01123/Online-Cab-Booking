@@ -19,12 +19,13 @@ import com.cabBooking.exceptions.DriverException;
 import com.cabBooking.models.Driver;
 import com.cabBooking.models.DriverDTO;
 import com.cabBooking.services.DriverServices;
+import com.cabBooking.services.DriverServicesImpl;
 
 @Controller
 public class DriverContoller {
 
 	@Autowired
-	DriverServices dService;
+	DriverServicesImpl dService;
 
 	@PostMapping("/driver")
 	public ResponseEntity<Driver> addDriver(@RequestBody Driver driver) throws DriverException {
@@ -69,6 +70,13 @@ public class DriverContoller {
 
 		return new ResponseEntity<DriverDTO>(requiredDriver, HttpStatus.CREATED);
 
+	}
+
+	@GetMapping("/listOfDrivers/{id}")
+	public ResponseEntity<List<Driver>> listOfDriver(@PathVariable("id") Integer id) {
+		List<Driver> list = dService.getDriversByCabId(id);
+
+		return new ResponseEntity<List<Driver>>(list, HttpStatus.OK);
 	}
 
 }

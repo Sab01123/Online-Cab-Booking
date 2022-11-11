@@ -14,5 +14,4 @@ public class OnlinecabbookingappApplication {
 		SpringApplication.run(OnlinecabbookingappApplication.class, args);
 		System.out.println("Online Booking Cab Application Server Started");
 	}
-
 }
