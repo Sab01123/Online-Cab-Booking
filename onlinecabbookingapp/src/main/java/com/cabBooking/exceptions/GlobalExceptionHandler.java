@@ -11,9 +11,9 @@ import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-	
+
 	@ExceptionHandler(CabException.class)
-	public ResponseEntity<MyErrorDetail>  cabException(CabException me,WebRequest web) {
+	public ResponseEntity<MyErrorDetail> cabException(CabException me, WebRequest web) {
 
 		MyErrorDetail err = new MyErrorDetail();
 
@@ -22,11 +22,11 @@ public class GlobalExceptionHandler {
 		err.setDescription(web.getDescription(false));
 
 		return new ResponseEntity<MyErrorDetail>(err, HttpStatus.BAD_REQUEST);
-
 
 	}
+
 	@ExceptionHandler(IllegalArgumentException.class)
-	public ResponseEntity<MyErrorDetail>  IllegalArguException(IllegalArgumentException me,WebRequest web) {
+	public ResponseEntity<MyErrorDetail> IllegalArguException(IllegalArgumentException me, WebRequest web) {
 
 		MyErrorDetail err = new MyErrorDetail();
 
@@ -36,6 +36,5 @@ public class GlobalExceptionHandler {
 
 		return new ResponseEntity<MyErrorDetail>(err, HttpStatus.BAD_REQUEST);
 
-
-
+	}
 }
