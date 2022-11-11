@@ -60,4 +60,19 @@ public ResponseEntity<MyErrorDetail> customerNotFoundHandler (CustomerNotFound c
 		}
 	
 	
+	@ExceptionHandler(LoginException.class)
+	public ResponseEntity<MyErrorDetail> loginHandler (LoginException le, WebRequest wr) {
+			
+			MyErrorDetail err = new MyErrorDetail();
+			
+			err.setTimestamp(LocalDateTime.now());
+			err.setMessage(le.getMessage());
+			err.setDescription(wr.getDescription(false));
+			
+			return new ResponseEntity<MyErrorDetail>(err, HttpStatus.BAD_REQUEST);
+			
+			
+		}
+	
+	
 }
