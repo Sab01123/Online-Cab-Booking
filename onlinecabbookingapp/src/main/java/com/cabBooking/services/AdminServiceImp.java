@@ -17,6 +17,21 @@ public class AdminServiceImp implements AdminService {
 	@Autowired
 	private AdminDao adminDao;
 
+	@Override
+	public Admin LoginAdmin(Admin admin) throws AdminExceptions {
+		
+		/*
+		Optional<Admin> opt = adminDao.findById(admin.getUserId());
+		if (opt.isPresent()) {
+			// Admin existAdmin = opt.get();
+			return adminDao.save(admin);
+		}
+		throw new AdminExceptions("Invalid Id");
+		*/
+		return null;
+		
+	}
+	
 	/*
 	  @Autowired private CustomerDao customerDao;
 	  
@@ -123,5 +138,4 @@ public class AdminServiceImp implements AdminService {
 		
 		return null;
 	}
-
 }
