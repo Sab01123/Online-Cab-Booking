@@ -57,7 +57,9 @@ public class CurrentUserSession {
 		this.localDateTime = localDateTime;
 	}
 	
-	
+	public CurrentUserSession() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 }

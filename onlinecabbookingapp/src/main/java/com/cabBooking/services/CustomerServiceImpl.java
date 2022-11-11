@@ -21,12 +21,14 @@ public class CustomerServiceImpl implements CustomerServices {
 
 	@Override
 	public Customer insertCustomer(Customer customer) throws CustomerNotFound {
-		Customer existingCustomer = customerRepo.findByMobileNumber(customer.getMobileNumber());
+		Customer c = customerRepo.findByUsername(customer.getUsername());
 		
-		if(existingCustomer!=null) {
-			throw new CustomerNotFound("Customer Already Register with this Mobile number");
+		if(c==null) {
+			customerRepo.save(customer);
 		}
-		return customerRepo.save(customer);
+		
+		throw new CustomerNotFound("Customer already exists with this username "+customer.getUsername());
+		
 	}
 
 	@Override

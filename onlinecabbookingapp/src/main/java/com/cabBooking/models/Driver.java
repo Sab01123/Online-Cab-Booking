@@ -24,7 +24,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
 public class Driver extends AbstractUser {
 
 	@Id
@@ -59,7 +58,9 @@ public class Driver extends AbstractUser {
 		this.rating = rating;
 	}
 
-
+public Driver() {
+	// TODO Auto-generated constructor stub
+}
 	
 	public Integer getDriverId() {
 		return driverId;

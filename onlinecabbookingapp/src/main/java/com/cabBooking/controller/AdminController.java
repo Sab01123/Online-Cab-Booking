@@ -13,9 +13,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.cabBooking.exceptions.AdminExceptions;
 import com.cabBooking.models.Admin;
+import com.cabBooking.models.AdminCurrentSession;
+import com.cabBooking.models.AdminCurrentSessionDto;
+import com.cabBooking.models.AdminDTO;
 import com.cabBooking.models.TripBooking;
 import com.cabBooking.services.AdminService;
+import com.cabBooking.services.AdminServiceImp;
 
 @RestController
 @RequestMapping("/admin")
@@ -24,55 +30,40 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 
-	@PostMapping("/")
-	public ResponseEntity<Admin> insertAdminHandler(@RequestBody Admin admin) {
-		Admin savedAdmin = adminService.insertAdmin(admin);
-		return new ResponseEntity<Admin>(savedAdmin, HttpStatus.OK);
+	@PostMapping("/login")
+	public ResponseEntity<AdminCurrentSession> adminLogin(@RequestBody AdminDTO admin) throws AdminExceptions{
+		
+		return new ResponseEntity<AdminCurrentSession>(adminService.LoginAdmin(admin), HttpStatus.ACCEPTED);
+		
+	}
+	
+	
+	@PostMapping("/insert")
+	public ResponseEntity<Admin> insertAdmin(@RequestBody Admin admin, @RequestBody AdminCurrentSessionDto acsd) throws AdminExceptions{
+		
+		return new ResponseEntity<Admin>(adminService.insertAdmin(admin, acsd.getKey()), HttpStatus.ACCEPTED);
+		
 	}
 
-	@DeleteMapping("/{adminId}")
-	public ResponseEntity<Admin> deleteMappingHandler(@PathVariable("adminId") Integer adminId) {
-		Admin returnAdmin = adminService.deleteAdmin(adminId);
-		return new ResponseEntity<Admin>(returnAdmin, HttpStatus.OK);
+	@PutMapping("/update")
+	public ResponseEntity<Admin> updateAdmin(@RequestBody Admin admin, @RequestBody AdminCurrentSessionDto acsd) throws AdminExceptions{
+		
+		return new ResponseEntity<Admin>( adminService.updateAdmin(admin, acsd.getKey()) ,HttpStatus.ACCEPTED);
+		
 	}
-
-	@GetMapping("/trips/{customerId}")
-	public ResponseEntity<List<TripBooking>> getAllTripsHandler(@PathVariable("customerId") Integer customerId) {
-
-		List<TripBooking> trips = adminService.getAllTrips(customerId);
-		return new ResponseEntity<List<TripBooking>>(trips, HttpStatus.OK);
+	
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<Admin> deleteAdmin(@PathVariable("id") int id , @RequestBody AdminCurrentSessionDto acsd) throws AdminExceptions{
+		
+		return new ResponseEntity<Admin>( adminService.deleteAdmin(id, acsd.getKey()) ,HttpStatus.ACCEPTED);
+		
 	}
-
-	@GetMapping("/trips/driverwise")
-	public ResponseEntity<List<TripBooking>> getTripsDriverwiseHandler() {
-
-		List<TripBooking> trips = adminService.getTripsCustomerwise();
-		return new ResponseEntity<List<TripBooking>>(trips, HttpStatus.OK);
+	
+	@GetMapping("/trips/{id}")
+	public ResponseEntity<List<TripBooking>> getTrips(@PathVariable("id") int id , @RequestBody AdminCurrentSessionDto acsd) throws AdminExceptions{
+		
+		return new ResponseEntity<List<TripBooking>>(adminService.getAllTrips(id, acsd.getKey()), HttpStatus.OK);
+		
 	}
-
-	@PutMapping("/")
-	public ResponseEntity<String> updateAdminHandler(@RequestBody Admin admin) {
-		Admin updatedAdmin = adminService.updateAdmin(admin);
-		return new ResponseEntity<String>("admin updated " + updatedAdmin, HttpStatus.ACCEPTED);
-	}
-
-	@GetMapping("/customertrips")
-	public List<TripBooking> getTripsCustomerwiseHandler() {
-		List<TripBooking> list = adminService.getTripsCustomerwise();
-		return list;
-	}
-
-	@GetMapping("/datewisetrips")
-	public List<TripBooking> getTripsDatewiseHandler() {
-		List<TripBooking> list = adminService.getTripsDatewise();
-		return list;
-	}
-
-	@GetMapping("trips/{customerId}/{date}")
-	public List<TripBooking> getTripsDatewiseAndCustomerHandler(@PathVariable("customerId") Integer customerId,
-			@PathVariable("date") String date) {
-		LocalDate date1 = LocalDate.parse(date);
-		List<TripBooking> list = adminService.getAllTripsForDays(customerId, date1);
-		return list;
-	}
+	
 }
