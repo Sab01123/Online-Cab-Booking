@@ -45,10 +45,7 @@ public class ITripBookingServiceImpl implements ITripBookingService {
 
 			for (TripBooking tb : trips) {
 
-				if ((tripBooking.getFromDateTime().isAfter(tb.getFromDateTime())
-						&& tripBooking.getFromDateTime().isBefore(tb.getToDateTime()))
-						|| (tripBooking.getToDateTime().isAfter(tb.getFromDateTime())
-								&& tripBooking.getToDateTime().isBefore(tb.getToDateTime()))) {
+				if ((tripBooking.getFromDateTime().isAfter(tb.getFromDateTime()) && tripBooking.getFromDateTime().isBefore(tb.getToDateTime())) || (tripBooking.getToDateTime().isAfter(tb.getFromDateTime()) && tripBooking.getToDateTime().isBefore(tb.getToDateTime())) || tripBooking.getFromDateTime().isEqual(tb.getFromDateTime()) || tripBooking.getToDateTime().isEqual(tb.getToDateTime())) {
 					if (tripBooking.getFromDateTime().toLocalDate().equals(tb.getFromDateTime().toLocalDate())) {
 
 						flag = true;

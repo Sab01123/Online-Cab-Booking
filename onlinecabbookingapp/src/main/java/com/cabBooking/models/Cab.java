@@ -34,8 +34,10 @@ public class Cab {
 	private Float perKmRate;
 
 	@JsonIgnore
+
 	@OneToMany(mappedBy = "cab")
 	private List<Driver> drivers= new ArrayList<>();
+
 
 	@Override
 	public String toString() {
