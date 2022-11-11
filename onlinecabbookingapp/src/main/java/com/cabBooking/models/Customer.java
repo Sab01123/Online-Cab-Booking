@@ -13,10 +13,7 @@ public class Customer extends AbstractUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer customerId;
-	
-	
 
- 
 	public Integer getCustomerId() {
 		return customerId;
 	}
@@ -25,12 +22,4 @@ public class Customer extends AbstractUser {
 		this.customerId = customerId;
 	}
 
-	
-
-
-	
-	
-	
-	
-	
 }

@@ -8,9 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface AdminService {
-	
-	public Admin LoginAdmin(Admin admin) throws AdminExceptions;
-	
+
 	public Admin insertAdmin(Admin admin) throws AdminExceptions;
 
 	public Admin updateAdmin(Admin admin) throws AdminExceptions;
@@ -19,9 +17,9 @@ public interface AdminService {
 
 	public List<TripBooking> getAllTrips(Integer customerid) throws AdminExceptions;
 
-	public List<TripBooking> getTripsCabwise();
+	public List<TripBooking> getTripsCabwise() throws AdminExceptions;;
 
-	public List<TripBooking> getTripsCustomerwise();
+	public List<TripBooking> getTripsCustomerwise() throws AdminExceptions;;
 
 	public List<TripBooking> getTripsDatewise() throws AdminExceptions;
 

@@ -2,6 +2,9 @@ package com.cabBooking.controller;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +28,15 @@ public class AdminController {
 	private AdminService adminService;
 
 	@PostMapping("/")
-	public ResponseEntity<Admin> insertAdminHandler(@RequestBody Admin admin) {
+	public ResponseEntity<Admin> insertAdminHandler(@Valid @RequestBody Admin admin) {
 		Admin savedAdmin = adminService.insertAdmin(admin);
 		return new ResponseEntity<Admin>(savedAdmin, HttpStatus.OK);
+	}
+
+	@PutMapping("/")
+	public ResponseEntity<String> updateAdminHandler(@RequestBody Admin admin) {
+		Admin updatedAdmin = adminService.updateAdmin(admin);
+		return new ResponseEntity<String>("admin updated " + updatedAdmin, HttpStatus.ACCEPTED);
 	}
 
 	@DeleteMapping("/{adminId}")
@@ -48,12 +57,6 @@ public class AdminController {
 
 		List<TripBooking> trips = adminService.getTripsCustomerwise();
 		return new ResponseEntity<List<TripBooking>>(trips, HttpStatus.OK);
-	}
-
-	@PutMapping("/")
-	public ResponseEntity<String> updateAdminHandler(@RequestBody Admin admin) {
-		Admin updatedAdmin = adminService.updateAdmin(admin);
-		return new ResponseEntity<String>("admin updated " + updatedAdmin, HttpStatus.ACCEPTED);
 	}
 
 	@GetMapping("/customertrips")
