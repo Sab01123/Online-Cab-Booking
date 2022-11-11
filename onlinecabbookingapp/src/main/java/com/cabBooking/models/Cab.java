@@ -30,19 +30,9 @@ public class Cab {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Driver driver;
 
-	public Cab(Integer cabId, String cabType, Float perKmRate, Driver driver) {
-		super();
-		this.cabId = cabId;
-		this.cabType = cabType;
-		this.perKmRate = perKmRate;
-		this.driver = driver;
-	}
+	
 
-	public Cab() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
+	
 	@Override
 	public String toString() {
 		return "Cab [cabId=" + cabId + ", cabType=" + cabType + ", perKmRate=" + perKmRate + ", driver=" + driver + "]";
