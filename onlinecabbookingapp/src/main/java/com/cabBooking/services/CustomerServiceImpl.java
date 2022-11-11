@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cabBooking.exceptions.CustomerNotFound;
-import com.cabBooking.exceptions.InValidId;
+import com.cabBooking.exceptions.InvalidId;
 import com.cabBooking.models.Customer;
 import com.cabBooking.repository.CustomerRepository;
 
@@ -46,7 +46,7 @@ public class CustomerServiceImpl implements CustomerServices {
 	}
 
 	@Override
-	public Customer deleteCustomer(Integer customerId) throws CustomerNotFound,InValidId{
+	public Customer deleteCustomer(Integer customerId) throws CustomerNotFound,InvalidId{
 		Optional<Customer>  cust = customerRepo.findById(customerId);
 		 
 		if(cust.isPresent()) {	
@@ -56,7 +56,7 @@ public class CustomerServiceImpl implements CustomerServices {
 		
 		}else {
 			
-			throw new InValidId("customer id is invalid or not present:" + customerId);
+			throw new InvalidId("customer id is invalid or not present:" + customerId);
 		}
 		
 		
@@ -77,7 +77,7 @@ public class CustomerServiceImpl implements CustomerServices {
 	}
 
 	@Override
-	public Customer viewCustomerById(Integer customerId)throws InValidId{
+	public Customer viewCustomerById(Integer customerId)throws InvalidId{
 	
 		Optional<Customer>  cust = customerRepo.findById(customerId);
 		 
@@ -87,7 +87,7 @@ public class CustomerServiceImpl implements CustomerServices {
 		
 		}else {
 			
-			throw new InValidId("customer id is invalid or not present:" + customerId);
+			throw new InvalidId("customer id is invalid or not present:" + customerId);
 		}
 		
 		

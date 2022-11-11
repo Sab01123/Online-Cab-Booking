@@ -8,6 +8,11 @@ import com.cabBooking.models.Customer;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
+
 	public Customer findByMobileNumber(String mobileNumber);
+
+	
+
+
 	
 }

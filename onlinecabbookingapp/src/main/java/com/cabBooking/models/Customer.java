@@ -4,9 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import lombok.Data;
 
-
-
+@Data
 @Entity
 public class Customer extends AbstractUser {
 
@@ -15,9 +15,8 @@ public class Customer extends AbstractUser {
 	private Integer customerId;
 	
 	
-	
-	
-//getter-setter
+
+ 
 	public Integer getCustomerId() {
 		return customerId;
 	}

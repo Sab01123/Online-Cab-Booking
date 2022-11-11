@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cabBooking.exceptions.CustomerNotFound;
-import com.cabBooking.exceptions.InValidId;
+import com.cabBooking.exceptions.InvalidId;
 import com.cabBooking.models.Customer;
 import com.cabBooking.services.CustomerServices;
 
@@ -44,7 +44,7 @@ public class CustomerController {
 	
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Customer> deleteCustomerHandler(@PathVariable("id")  Integer id) throws CustomerNotFound, InValidId{
+	public ResponseEntity<Customer> deleteCustomerHandler(@PathVariable("id")  Integer id) throws CustomerNotFound, InvalidId{
 			
 		Customer cus = 	customerService.deleteCustomer(id);
 			
@@ -60,7 +60,7 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/customer/{id}")
-	public ResponseEntity<Customer> getCustomerByIdHandler(@PathVariable("id") Integer id) throws InValidId{
+	public ResponseEntity<Customer> getCustomerByIdHandler(@PathVariable("id") Integer id) throws InvalidId{
 		
 		Customer cus = 	customerService.viewCustomerById(id);
 		
