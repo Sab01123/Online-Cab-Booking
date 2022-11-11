@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.cabBooking.exceptions.CustomerNotFound;
 import com.cabBooking.exceptions.InvalidId;
 import com.cabBooking.models.Customer;
