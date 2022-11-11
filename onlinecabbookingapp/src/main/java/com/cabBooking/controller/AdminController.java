@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cabBooking.exceptions.AdminExceptions;
+import com.cabBooking.exceptions.CustomerNotFound;
+import com.cabBooking.exceptions.TripBookingException;
 import com.cabBooking.models.Admin;
 import com.cabBooking.models.AdminCurrentSession;
 import com.cabBooking.models.AdminCurrentSessionDto;
@@ -59,10 +61,44 @@ public class AdminController {
 		
 	}
 	
-	@GetMapping("/trips/{id}")
-	public ResponseEntity<List<TripBooking>> getTrips(@PathVariable("id") int id , @RequestBody AdminCurrentSessionDto acsd) throws AdminExceptions{
+	@GetMapping("/trips")
+	public ResponseEntity<List<TripBooking>> getTrips(@RequestBody AdminCurrentSessionDto acsd) throws AdminExceptions{
 		
-		return new ResponseEntity<List<TripBooking>>(adminService.getAllTrips(id, acsd.getKey()), HttpStatus.OK);
+		return new ResponseEntity<List<TripBooking>>(adminService.getAllTrips(acsd.getKey()), HttpStatus.OK);
+		
+	}
+	
+	@GetMapping("/tripsByCab/{type}")
+	public ResponseEntity<List<TripBooking>> getTripsByCabType(@PathVariable("type") String type , @RequestBody AdminCurrentSessionDto acsd) throws AdminExceptions, TripBookingException{
+		
+		return new ResponseEntity<List<TripBooking>>(adminService.getTripsCabwise(type, acsd.getKey()), HttpStatus.OK);
+		
+	}
+	
+	@GetMapping("/tripsByDate/{date}")
+	public ResponseEntity<List<TripBooking>> getTripsByDate(@PathVariable("date") String date , @RequestBody AdminCurrentSessionDto acsd) throws AdminExceptions, TripBookingException{
+		
+		LocalDate realDate = LocalDate.parse(date);
+		
+		return new ResponseEntity<List<TripBooking>>(adminService.getTripsDatewise(realDate, acsd.getKey()), HttpStatus.OK);
+		
+	}
+	
+	@GetMapping("/tripsByCustomer/{id}")
+	public ResponseEntity<List<TripBooking>> getTripsByDate(@PathVariable("id") Integer id , @RequestBody AdminCurrentSessionDto acsd) throws AdminExceptions, TripBookingException, CustomerNotFound{
+		
+		
+		
+		return new ResponseEntity<List<TripBooking>>(adminService.getTripsCustomerwise(id, acsd.getKey()), HttpStatus.OK);
+		
+	}
+	
+	@GetMapping("/tripsByCustomer/{id}/{date}")
+	public ResponseEntity<List<TripBooking>> getTripsByDateWithCustomer(@PathVariable("id") Integer id ,@PathVariable("date") String date, @RequestBody AdminCurrentSessionDto acsd) throws AdminExceptions, TripBookingException, CustomerNotFound{
+		
+		LocalDate realDate = LocalDate.parse(date);
+		
+		return new ResponseEntity<List<TripBooking>>(adminService.getAllTripsForDays(id, realDate, acsd.getKey()), HttpStatus.OK);
 		
 	}
 	

@@ -34,13 +34,10 @@ public class Cab {
 	private Float perKmRate;
 
 	@JsonIgnore
-<<<<<<< HEAD
-	@OneToOne(cascade = CascadeType.ALL)
-	private Driver driver;
-=======
+
 	@OneToMany(mappedBy = "cab")
 	private List<Driver> drivers= new ArrayList<>();
->>>>>>> main
+
 
 	@Override
 	public String toString() {

@@ -1,15 +1,26 @@
 package com.cabBooking.services;
 
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import com.cabBooking.exceptions.AdminExceptions;
+import com.cabBooking.exceptions.CustomerNotFound;
+import com.cabBooking.exceptions.TripBookingException;
 import com.cabBooking.models.Admin;
 import com.cabBooking.models.AdminCurrentSession;
 import com.cabBooking.models.AdminDTO;
+import com.cabBooking.models.Cab;
+import com.cabBooking.models.Customer;
+import com.cabBooking.models.Driver;
 import com.cabBooking.models.TripBooking;
 import com.cabBooking.repository.AdminCurrentSessionRepo;
 import com.cabBooking.repository.AdminDao;
@@ -144,75 +155,141 @@ public class AdminServiceImp implements AdminService {
 	
 
 	@Override
-	public List<TripBooking> getAllTrips(Integer customerId, String key) throws AdminExceptions {
+	public List<TripBooking> getAllTrips(String key) throws AdminExceptions {
 
 		
 		if(adminSessionRepo.findByAdminKey(key)!=null) {
 			
-			List<TripBooking> trips = tripRepo.findAllTripsByCustomerId(customerId);
+			List<TripBooking> trips = tripRepo.findAll();
 			
 			if(trips.size()!=0) {
+				
 				return trips;
+			
 			}
-			throw new AdminExceptions("No trip is booked with the customer id "+customerId);
+			throw new AdminExceptions("No trip is booked");
 			
 		}
 		throw new AdminExceptions("No current session of admin exixts with the key "+key);
 	}
 
 	@Override
-	public List<TripBooking> getTripsCabwise() {
-	/*
-		List<TripBooking> list = tripDao.findByCabAscs();
-
-		if (list.size() > 0)
-			return list;
-		else
-			throw new AdminExceptions("No trips found");
-     */
-		return null;
-	}
-
-	@Override
-	public List<TripBooking> getTripsCustomerwise() {
+	public List<TripBooking> getTripsCabwise(String cabType, String key) throws TripBookingException, AdminExceptions {
 	
-		/*
-		List<TripBooking> list = tripDao.findByCustomeridAsce();
-		if (list.size() > 0)
-			return list;
-		else
-			throw new AdminExceptions("No trips found");
-		*/
+		if(adminSessionRepo.findByAdminKey(key)!=null){
+			
+			List<Cab> cabs = cabDao.findByCabType(cabType.toLowerCase());
+			
+			List<TripBooking> res = new ArrayList<>();
+			
+			for(Cab c:cabs) {
+				
+				List<Driver> drivers =  c.getDrivers();
+				
+				for(Driver d:drivers) {
+					
+					Set<TripBooking> trips = d.getTripBooking();
+					
+					for(TripBooking tb:trips) {
+						res.add(tb);
+					}
+				}
+			}
+			
+			if(res.size()==0) {
+				throw new TripBookingException("No trips present with the cab type "+cabType);
+			}
+			return res;
+		}
 		
-		return null;
+		throw new AdminExceptions("No current session of admin exixts with the key "+key);
 	}
 
 	@Override
-	public List<TripBooking> getTripsDatewise() throws AdminExceptions {
+	public List<TripBooking> getTripsCustomerwise(Integer customerId, String key) throws CustomerNotFound, AdminExceptions{
+	
+		
+		if(adminSessionRepo.findByAdminKey(key)!=null){
+			
+			Optional<Customer> opt = customerRepo.findById(customerId);
+			
+			if(opt.isPresent()) {
+				
+				
+				
+				return new ArrayList<>(opt.get().getTrips());
+				
+			}
+			throw new CustomerNotFound("No customer found with id "+customerId);
+		}
+		
+		throw new AdminExceptions("No current session of admin exixts with the key "+key);
+     
+	}
 
-        /*
-         List<TripBooking> list = tripDao.findByFromdate_timeAsce();
-		if (list.size() > 0)
-			return list;
-		else
-			throw new AdminExceptions("No trips found");
-                 
-         */
+	@Override
+	public List<TripBooking> getTripsDatewise(LocalDate date, String key) throws AdminExceptions, TripBookingException {
+
+if(adminSessionRepo.findByAdminKey(key)!=null){
+			
+			List<TripBooking> trips = tripRepo.findAll();
+			
+			List<TripBooking> res = new ArrayList<>();
+			
+			for(TripBooking tb:trips) {
+				
+				if(tb.getFromDateTime().toLocalDate().isEqual(date)) {
+					
+					res.add(tb);
+					
+				}
+				
+			}
+			
+			if(res.size()!=0) {
+				return res;
+			}
+			throw new TripBookingException("No trip is booked on "+date);
          
-		return null;
+		
 	}
 
-	@Override
-	public List<TripBooking> getAllTripsForDays(Integer customerId, LocalDate date) throws AdminExceptions {
 	
-		/*
-		List<TripBooking> list = tripDao.findByCustomerIdAndFromdate_time(customerId, date);
-		if (list.size() > 0)
-			return list;
-		else
-			throw new AdminExceptions("No trips found for customer id " + customerId + " and date : " + date);
-		*/
 		
-		return null;
+		
+		
+		throw new AdminExceptions("No current session of admin exixts with the key "+key);
 	}
+
+
+	@Override
+	public List<TripBooking> getAllTripsForDays(Integer customerId, LocalDate date, String key)
+			throws AdminExceptions, TripBookingException {
+		// TODO Auto-generated method stub
+		
+		if(adminSessionRepo.findByAdminKey(key)!=null){
+			
+		  List<TripBooking> trips = tripRepo.findAllTripsByCustomerId(customerId);
+		  List<TripBooking> res = new ArrayList<>();
+		  
+		  for(TripBooking tb:trips) {
+			  
+			  if(tb.getFromDateTime().toLocalDate().isEqual(date)) {
+				  res.add(tb);
+			  }
+			  
+		  }
+		  
+		  if(res.size()!=0) {
+			  return res;
+		  }
+		throw new TripBookingException("No trip found on "+date+" for customer with customer id "+customerId);
+		}
+		
+		throw new AdminExceptions("No current session of admin exixts with the key "+key);
+	}
+
+
+	
+
 }

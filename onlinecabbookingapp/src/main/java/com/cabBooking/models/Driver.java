@@ -42,11 +42,7 @@ public class Driver extends AbstractUser {
 	@OneToMany(mappedBy = "driver")
 	Set<TripBooking> tripBooking = new HashSet<>();
 
-	@Override
-	public String toString() {
-		return "Driver [driverId=" + driverId + ", liscenceNo=" + liscenceNo + ", cabType=" + cabType + ", cab=" + cab
-				+ ", rating=" + rating + ", tripBooking=" + tripBooking + "]";
-	}
+	
 
 //	public Driver(
 //			@NotNull(message = "username should not be null") @Size(min = 3, max = 15, message = "length of username must be between 3 & 15") String username,
@@ -61,10 +57,7 @@ public class Driver extends AbstractUser {
 //		this.rating = rating;
 //	}
 
-	public Driver() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	
 
 //	public Driver(
 //			@NotNull(message = "username should not be null") @Size(min = 3, max = 15, message = "length of username must be between 3 & 15") String username,
@@ -76,70 +69,120 @@ public class Driver extends AbstractUser {
 //		// TODO Auto-generated constructor stub
 //	}
 
-	public Driver(Integer driverId, String liscenceNo, String cabType, Cab cab, Float rating,
-			Set<TripBooking> tripBooking) {
-		super();
-		this.driverId = driverId;
-		this.liscenceNo = liscenceNo;
-		this.cabType = cabType;
-		this.cab = cab;
-		this.rating = rating;
-		this.tripBooking = tripBooking;
+	@Override
+	public String toString() {
+		return "Driver [driverId=" + driverId + ", liscenceNo=" + liscenceNo + ", cabType=" + cabType + ", cab=" + cab
+				+ ", rating=" + rating + ", tripBooking=" + tripBooking + "]";
 	}
 
-<<<<<<< HEAD
+
+	
+
+
+public Driver(String liscenceNo, String cabType, Cab cab, Float rating, Set<TripBooking> tripBooking) {
+	super();
+	this.liscenceNo = liscenceNo;
+	this.cabType = cabType;
+	this.cab = cab;
+	this.rating = rating;
+	this.tripBooking = tripBooking;
+}
+
+
+
+
+
 public Driver() {
 	// TODO Auto-generated constructor stub
 }
+
+
+
+
+
+public String getLiscenceNo() {
+	return liscenceNo;
+}
+
+
+
+
+
+public void setLiscenceNo(String liscenceNo) {
+	this.liscenceNo = liscenceNo;
+}
+
+
+
+
+
+public String getCabType() {
+	return cabType;
+}
+
+
+
+
+
+public void setCabType(String cabType) {
+	this.cabType = cabType;
+}
+
+
+
+
+
+public Cab getCab() {
+	return cab;
+}
+
+
+
+
+
+public void setCab(Cab cab) {
+	this.cab = cab;
+}
+
+
+
+
+
+public Float getRating() {
+	return rating;
+}
+
+
+
+
+
+public void setRating(Float rating) {
+	this.rating = rating;
+}
+
+
+
+
+
+public Set<TripBooking> getTripBooking() {
+	return tripBooking;
+}
+
+
+
+
+
+public void setTripBooking(Set<TripBooking> tripBooking) {
+	this.tripBooking = tripBooking;
+}
+
+
+
+
+
+public Integer getDriverId() {
+	return driverId;
+}
 	
-=======
->>>>>>> main
-	public Integer getDriverId() {
-		return driverId;
-	}
-
-	public void setDriverId(Integer driverId) {
-		this.driverId = driverId;
-	}
-
-	public String getLiscenceNo() {
-		return liscenceNo;
-	}
-
-	public void setLiscenceNo(String liscenceNo) {
-		this.liscenceNo = liscenceNo;
-	}
-
-	public Cab getCab() {
-		return cab;
-	}
-
-	public void setCab(Cab cab) {
-		this.cab = cab;
-	}
-
-	public Float getRating() {
-		return rating;
-	}
-
-	public String getCabtype() {
-		return cabType;
-	}
-
-	public void setCabtype(String cabtype) {
-		this.cabType = cabtype;
-	}
-
-	public void setRating(Float rating) {
-		this.rating = rating;
-	}
-
-	public Set<TripBooking> getTripBooking() {
-		return tripBooking;
-	}
-
-	public void setTripBooking(Set<TripBooking> tripBooking) {
-		this.tripBooking = tripBooking;
-	}
 
 }

@@ -45,6 +45,9 @@ public class TripBooking {
 	private boolean status;
 	private Float distanceInKm;
 	private Float bill;
+	
+	@ManyToOne
+	private Customer customer;
 	public Integer getTripBookingId() {
 		return tripBookingId;
 	}
@@ -101,6 +104,15 @@ public class TripBooking {
 	}
 	public Integer getCustomerId() {
 		return customerId;
+	}
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
 	}
 	
 	

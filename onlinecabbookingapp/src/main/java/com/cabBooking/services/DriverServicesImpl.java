@@ -29,7 +29,7 @@ public class DriverServicesImpl implements DriverServices {
 		List<Cab> cabs = cabDao.findAll();
 
 		for (Cab i : cabs) {
-			if (i.getCabType().equals(driver.getCabtype())) {
+			if (i.getCabType().toLowerCase().equals(driver.getCabType().toLowerCase())) {
 				driver.setCab(i);
 				i.getDrivers().add(driver);
 				flag = true;
