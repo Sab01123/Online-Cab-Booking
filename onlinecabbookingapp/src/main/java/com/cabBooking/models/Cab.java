@@ -30,9 +30,6 @@ public class Cab {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Driver driver;
 
-	
-
-	
 	@Override
 	public String toString() {
 		return "Cab [cabId=" + cabId + ", cabType=" + cabType + ", perKmRate=" + perKmRate + ", driver=" + driver + "]";
