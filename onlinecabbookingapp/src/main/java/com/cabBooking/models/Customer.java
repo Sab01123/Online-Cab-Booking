@@ -15,7 +15,8 @@ public class Customer extends AbstractUser {
 	private Integer customerId;
 	
 	
-    //getter-setter
+
+ 
 	public Integer getCustomerId() {
 		return customerId;
 	}

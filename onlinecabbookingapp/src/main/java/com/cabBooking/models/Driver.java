@@ -20,7 +20,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Data
+//@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -58,5 +58,39 @@ public class Driver extends AbstractUser {
 		this.liscenceNo = liscenceNo;
 		this.rating = rating;
 	}
+
+	public Integer getDriverId() {
+		return driverId;
+	}
+
+	public void setDriverId(Integer driverId) {
+		this.driverId = driverId;
+	}
+
+	public String getLiscenceNo() {
+		return liscenceNo;
+	}
+
+	public void setLiscenceNo(String liscenceNo) {
+		this.liscenceNo = liscenceNo;
+	}
+
+	public Float getRating() {
+		return rating;
+	}
+
+	public void setRating(Float rating) {
+		this.rating = rating;
+	}
+
+	public Set<TripBooking> getTripBooking() {
+		return tripBooking;
+	}
+
+	public void setTripBooking(Set<TripBooking> tripBooking) {
+		this.tripBooking = tripBooking;
+	}
+	
+	
 
 }
