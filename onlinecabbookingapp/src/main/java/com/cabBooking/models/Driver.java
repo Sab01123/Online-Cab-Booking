@@ -33,8 +33,8 @@ public class Driver extends AbstractUser {
 
 	private String liscenceNo;
 
-//	@OneToOne(cascade = CascadeType.ALL)
-//	private Cab cab;
+	@OneToOne(cascade = CascadeType.ALL)
+	private Cab cab;
 	private Float rating;
 
 	@JsonIgnore
@@ -58,5 +58,51 @@ public class Driver extends AbstractUser {
 		this.liscenceNo = liscenceNo;
 		this.rating = rating;
 	}
+
+
+	
+	public Integer getDriverId() {
+		return driverId;
+	}
+
+	public void setDriverId(Integer driverId) {
+		this.driverId = driverId;
+	}
+
+	public String getLiscenceNo() {
+		return liscenceNo;
+	}
+
+	public void setLiscenceNo(String liscenceNo) {
+		this.liscenceNo = liscenceNo;
+	}
+
+	public Cab getCab() {
+		return cab;
+	}
+
+	public void setCab(Cab cab) {
+		this.cab = cab;
+	}
+
+	public Float getRating() {
+		return rating;
+	}
+
+	public void setRating(Float rating) {
+		this.rating = rating;
+	}
+
+	public Set<TripBooking> getTripBooking() {
+		return tripBooking;
+	}
+
+	public void setTripBooking(Set<TripBooking> tripBooking) {
+		this.tripBooking = tripBooking;
+	}
+
+	
+	
+	
 
 }

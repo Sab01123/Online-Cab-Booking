@@ -13,6 +13,7 @@ import com.cabBooking.repository.AdminDao;
 
 @Service
 public class AdminServiceImp implements AdminService {
+	
 	@Autowired
 	private AdminDao adminDao;
 
