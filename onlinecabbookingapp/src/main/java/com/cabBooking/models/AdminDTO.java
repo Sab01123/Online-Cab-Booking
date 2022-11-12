@@ -1,9 +1,6 @@
 package com.cabBooking.models;
 
-import lombok.Data;
-
-//@Data
-public class LoginDTO {
+public class AdminDTO {
 
 	private String username;
 	private String password;

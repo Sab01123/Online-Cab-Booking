@@ -8,9 +8,13 @@ import com.cabBooking.models.Cab;
 public interface CabService {
 
 	public Cab insertCab(Cab cab);
-	public Cab updateCab(Cab cab)throws CabException;
-	public Cab deleteCab(Integer cabId)throws CabException;
-	public List<Cab> viewCabsOfTypes(String carType)throws CabException;
-	public int countCabsOfType(String carType)throws CabException;
-	
+
+	public Cab updateCab(Cab cab) throws CabException;
+
+	public Cab deleteCab(Integer cabId) throws CabException;
+
+	public List<Cab> viewCabsOfTypes(String carType) throws CabException;
+
+	public int countCabsOfType(String carType) throws CabException;
+
 }

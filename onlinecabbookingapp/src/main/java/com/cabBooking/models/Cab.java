@@ -1,13 +1,19 @@
 package com.cabBooking.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,12 +33,15 @@ public class Cab {
 	private String cabType;
 	private Float perKmRate;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	private Driver driver;
+	@JsonIgnore
+
+	@OneToMany(mappedBy = "cab")
+	private List<Driver> drivers = new ArrayList<>();
 
 	@Override
 	public String toString() {
-		return "Cab [cabId=" + cabId + ", cabType=" + cabType + ", perKmRate=" + perKmRate + ", driver=" + driver + "]";
+		return "Cab [cabId=" + cabId + ", cabType=" + cabType + ", perKmRate=" + perKmRate + ", driver=" + drivers
+				+ "]";
 	}
 
 	public Integer getCabId() {
@@ -59,12 +68,16 @@ public class Cab {
 		this.perKmRate = perKmRate;
 	}
 
-	public Driver getDriver() {
-		return driver;
+	public List<Driver> getDrivers() {
+		return drivers;
 	}
 
-	public void setDriver(Driver driver) {
-		this.driver = driver;
+	public void setDrivers(List<Driver> drivers) {
+		this.drivers = drivers;
+	}
+
+	public static void main(String[] args) {
+
 	}
 
 }

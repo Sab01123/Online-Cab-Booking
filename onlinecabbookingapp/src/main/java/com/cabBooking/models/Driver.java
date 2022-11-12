@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
@@ -20,11 +21,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
-
 public class Driver extends AbstractUser {
 
 	@Id
@@ -33,40 +30,57 @@ public class Driver extends AbstractUser {
 
 	private String liscenceNo;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	private String cabType;
+
+	@ManyToOne
 	private Cab cab;
+
 	private Float rating;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "driver")
 	Set<TripBooking> tripBooking = new HashSet<>();
 
+//	public Driver(
+//			@NotNull(message = "username should not be null") @Size(min = 3, max = 15, message = "length of username must be between 3 & 15") String username,
+//			@NotNull(message = "user password should not be null") @Size(min = 3, max = 10, message = "length of username must be between 3 & 10") String password,
+//			@NotNull(message = "user address should not be null") String address,
+//			@NotNull(message = "user mobileNumber should not be null") String mobileNumber,
+//			@Email(message = "email should be in correct formate") String email, Integer driverId, String liscenceNo,
+//			Float rating) {
+//		super(username, password, address, mobileNumber, email);
+//		this.driverId = driverId;
+//		this.liscenceNo = liscenceNo;
+//		this.rating = rating;
+//	}
+
+//	public Driver(
+//			@NotNull(message = "username should not be null") @Size(min = 3, max = 15, message = "length of username must be between 3 & 15") String username,
+//			@NotNull(message = "user password should not be null") @Size(min = 3, max = 10, message = "length of username must be between 3 & 10") String password,
+//			@NotNull(message = "user address should not be null") String address,
+//			@NotNull(message = "user mobileNumber should not be null") String mobileNumber,
+//			@Email(message = "email should be in correct formate") String email) {
+//		super(username, password, address, mobileNumber, email);
+//		// TODO Auto-generated constructor stub
+//	}
+
 	@Override
 	public String toString() {
-		return "Driver [driverId=" + driverId + ", liscenceNo=" + liscenceNo + ", rating=" + rating + "]";
+		return "Driver [driverId=" + driverId + ", liscenceNo=" + liscenceNo + ", cabType=" + cabType + ", cab=" + cab
+				+ ", rating=" + rating + ", tripBooking=" + tripBooking + "]";
 	}
 
-	public Driver(
-			@NotNull(message = "username should not be null") @Size(min = 3, max = 15, message = "length of username must be between 3 & 15") String username,
-			@NotNull(message = "user password should not be null") @Size(min = 3, max = 10, message = "length of username must be between 3 & 10") String password,
-			@NotNull(message = "user address should not be null") String address,
-			@NotNull(message = "user mobileNumber should not be null") String mobileNumber,
-			@Email(message = "email should be in correct formate") String email, Integer driverId, String liscenceNo,
-			Float rating) {
-		super(username, password, address, mobileNumber, email);
-		this.driverId = driverId;
+	public Driver(String liscenceNo, String cabType, Cab cab, Float rating, Set<TripBooking> tripBooking) {
+		super();
 		this.liscenceNo = liscenceNo;
+		this.cabType = cabType;
+		this.cab = cab;
 		this.rating = rating;
+		this.tripBooking = tripBooking;
 	}
 
-
-	
-	public Integer getDriverId() {
-		return driverId;
-	}
-
-	public void setDriverId(Integer driverId) {
-		this.driverId = driverId;
+	public Driver() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getLiscenceNo() {
@@ -75,6 +89,14 @@ public class Driver extends AbstractUser {
 
 	public void setLiscenceNo(String liscenceNo) {
 		this.liscenceNo = liscenceNo;
+	}
+
+	public String getCabType() {
+		return cabType;
+	}
+
+	public void setCabType(String cabType) {
+		this.cabType = cabType;
 	}
 
 	public Cab getCab() {
@@ -101,8 +123,8 @@ public class Driver extends AbstractUser {
 		this.tripBooking = tripBooking;
 	}
 
-	
-	
-	
+	public Integer getDriverId() {
+		return driverId;
+	}
 
 }
