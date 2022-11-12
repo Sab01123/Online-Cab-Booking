@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cabBooking.exceptions.CustomerNotFound;
 import com.cabBooking.exceptions.InvalidId;
 import com.cabBooking.models.Customer;
+import com.cabBooking.models.CustomerDTO1;
 import com.cabBooking.services.CustomerServices;
 
 @RestController
@@ -67,16 +68,18 @@ public class CustomerController {
 		return new ResponseEntity<Customer> (cus,HttpStatus.OK);
 		
 }
-	@PostMapping("/validateCustomer/{username}/{password}")
-//	@PostMapping("/validateCustomer")
-	public ResponseEntity<Customer> vaildCustomerByUserName( @PathVariable("username") String username, @PathVariable("password") String password) throws CustomerNotFound{
-		Customer cus = 	customerService.validateCustomer(username, password);
+
+	
+	
+	
+	@PostMapping("/validateCustomer")
+	public ResponseEntity<Customer> vaildCustomerByUserName( @RequestBody CustomerDTO1 customerdto) throws CustomerNotFound{
+		Customer cus = 	customerService.validateCustomer(customerdto);
 		
 		return new ResponseEntity<>(cus,HttpStatus.ACCEPTED);
 		
 		
 	}
-	
 	
 	
 }

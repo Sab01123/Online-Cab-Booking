@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.cabBooking.exceptions.CustomerNotFound;
 import com.cabBooking.exceptions.InvalidId;
 import com.cabBooking.models.Customer;
+import com.cabBooking.models.CustomerDTO1;
 import com.cabBooking.repository.CustomerRepository;
 
 
@@ -94,13 +95,13 @@ public class CustomerServiceImpl implements CustomerServices {
 	}
 
 	@Override
-	public Customer validateCustomer(String username, String password) throws CustomerNotFound{
+	public Customer validateCustomer(CustomerDTO1 customerdto) throws CustomerNotFound{
 		
 		List<Customer> cust = customerRepo.findAll();
 		
 		for(Customer c :cust) {
-			if(c.getUsername().equalsIgnoreCase(username)
-					&& c.getPassword().equals(password)) {
+			if(c.getUsername().equals(customerdto.getUsername())
+					&& c.getPassword().equals(customerdto.getPassword())) {
 				  return c;
 			
 			}
@@ -108,7 +109,7 @@ public class CustomerServiceImpl implements CustomerServices {
 		}
 		
 			
-				throw new CustomerNotFound("Customer should not present with this username:" +username + "password :"+ password);
+				throw new CustomerNotFound("Customer should not present with this username:" +customerdto.getUsername()+ "password :"+ customerdto.getPassword());
 		
 		}
 		

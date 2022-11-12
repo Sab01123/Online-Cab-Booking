@@ -50,13 +50,13 @@ public class CurrentUserSession {
 		this.localDateTime = localDateTime;
 	}
 
-	public CurrentUserSession(Integer userId, String uuid, LocalDateTime localDateTime) {
-		super();
-		this.userId = userId;
-		this.uuid = uuid;
-		this.localDateTime = localDateTime;
-	}
-	
+//	public CurrentUserSession(Integer userId, String uuid, LocalDateTime localDateTime) {
+//		super();
+//	this.userId = userId;
+//	this.uuid = uuid;
+//	this.localDateTime = localDateTime;
+//}
+//	
 	
 	
 	
