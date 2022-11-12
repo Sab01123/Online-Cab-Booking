@@ -15,7 +15,7 @@ public interface CustomerServices {
 
 //	public List<Customer> viewCustomers()throws CustomerNotFound;
 	public Customer viewCustomerById(Integer customerId) throws InvalidId, CustomerNotFound;
-	public Customer validateCustomer(String username, String password) throws CustomerNotFound;
+	public  Customer validateCustomer(CustomerDTO1 customerdto) throws CustomerNotFound;
 	
 
 	

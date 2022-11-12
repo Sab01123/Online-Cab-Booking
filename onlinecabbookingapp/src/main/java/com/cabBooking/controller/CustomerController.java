@@ -74,8 +74,8 @@ public class CustomerController {
 	
 	
 	@PostMapping("/validateCustomer")
-	public ResponseEntity<Customer> vaildCustomerByUserName( @RequestBody CustomerDTO1 customerdto) throws CustomerNotFound{
-		Customer cus = 	customerService.validateCustomer(customerdto);
+	public ResponseEntity<Customer> vaildCustomerHandler( @RequestBody CustomerDTO1 customerdto) throws CustomerNotFound{
+		Customer cus = customerService.validateCustomer(customerdto);
 		
 
 		return new ResponseEntity<>(cus,HttpStatus.ACCEPTED);
