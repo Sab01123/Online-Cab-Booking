@@ -10,6 +10,7 @@ import com.cabBooking.exceptions.CustomerNotFound;
 import com.cabBooking.exceptions.InvalidId;
 import com.cabBooking.models.CurrentUserSession;
 import com.cabBooking.models.Customer;
+import com.cabBooking.models.CustomerDTO1;
 import com.cabBooking.repository.CustomerRepository;
 import com.cabBooking.repository.SessionDao;
 
@@ -129,6 +130,13 @@ public class CustomerServiceImpl implements CustomerServices {
 				return c;
 
 			}
+
+
+	
+		
+			
+				throw new CustomerNotFound("Customer should not present with this username:" +customerdto.getUsername()+ "password :"+ customerdto.getPassword());
+		
 
 		}
 
