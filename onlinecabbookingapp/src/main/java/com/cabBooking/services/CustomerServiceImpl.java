@@ -118,24 +118,22 @@ public class CustomerServiceImpl implements CustomerServices {
 	}
 
 	@Override
-	public Customer validateCustomer(String username, String password) throws CustomerNotFound {
+	public Customer validateCustomer(CustomerDTO1 customerdto) throws CustomerNotFound {
+		
+		List<Customer> cus = customerRepo.findAll();
 
-		List<Customer> cust = customerRepo.findAll();
-
-		for (Customer c : cust) {
-			if (c.getUsername().equalsIgnoreCase(username) && c.getPassword().equals(password)) {
-				return c;
-
+		for(int i=0;i<cus.size();i++) {
+			if(cus.get(i).getUsername().equals(customerdto.getUsername())&&
+					cus.get(i).getPassword().equals(customerdto.getPassword())) 
+			return	cus.get(i);
 			}
-
-			throw new CustomerNotFound("Customer should not present with this username:" + customerdto.getUsername()
-					+ "password :" + customerdto.getPassword());
-
+			
+		
+			throw new CustomerNotFound("Invalid username and password");
+				
+		
+		
+		
 		}
-
-		throw new CustomerNotFound(
-				"Customer should not present with this username:" + username + "password :" + password);
-
-	}
 
 }
