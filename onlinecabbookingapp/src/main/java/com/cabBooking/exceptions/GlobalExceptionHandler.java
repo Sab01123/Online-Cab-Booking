@@ -74,5 +74,42 @@ public class GlobalExceptionHandler {
 
 		return new ResponseEntity<MyErrorDetail>(err, HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(TripBookingException.class)
+	public ResponseEntity<MyErrorDetail> tripBookingExceptionHandler(TripBookingException tbe, WebRequest wr) {
 
+		MyErrorDetail err = new MyErrorDetail();
+
+		err.setTimestamp(LocalDateTime.now());
+		err.setMessage(tbe.getMessage());
+		err.setDescription(wr.getDescription(false));
+
+		return new ResponseEntity<MyErrorDetail>(err, HttpStatus.BAD_REQUEST);
+	}
+
+	
+	@ExceptionHandler(LoginException.class)
+	public ResponseEntity<MyErrorDetail> tripBookingExceptionHandler(LoginException le, WebRequest wr) {
+
+		MyErrorDetail err = new MyErrorDetail();
+
+		err.setTimestamp(LocalDateTime.now());
+		err.setMessage(le.getMessage());
+		err.setDescription(wr.getDescription(false));
+
+		return new ResponseEntity<MyErrorDetail>(err, HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	@ExceptionHandler(AdminExceptions.class)
+	public ResponseEntity<MyErrorDetail> tripBookingExceptionHandler(AdminExceptions ae, WebRequest wr) {
+
+		MyErrorDetail err = new MyErrorDetail();
+
+		err.setTimestamp(LocalDateTime.now());
+		err.setMessage(ae.getMessage());
+		err.setDescription(wr.getDescription(false));
+
+		return new ResponseEntity<MyErrorDetail>(err, HttpStatus.BAD_REQUEST);
+	}
 }

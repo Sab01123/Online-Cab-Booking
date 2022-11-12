@@ -24,11 +24,11 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public String logIntoAccount(LoginDTO dto) throws LoginException {
 
-		Customer existingCustomer = cDao.findByMobileNumber(dto.getMobileNumber());
+		Customer existingCustomer = cDao.findByUsername(dto.getUsername());
 
 		if (existingCustomer == null) {
 
-			throw new LoginException("Please Enter a valid mobile number");
+			throw new LoginException("Please Enter a valid username");
 
 		}
 
@@ -36,7 +36,7 @@ public class LoginServiceImpl implements LoginService {
 
 		if (validCustomerSessionOpt.isPresent()) {
 
-			throw new LoginException("User already Logged In with this number");
+			throw new LoginException("user with username "+existingCustomer.getUsername()+" is already logged in");
 
 		}
 
@@ -49,22 +49,26 @@ public class LoginServiceImpl implements LoginService {
 
 			sDao.save(currentUserSession);
 
-			return currentUserSession.toString();
+			return "Login is successfull and your unique login key is "+currentUserSession.getUuid();
 		} else
 			throw new LoginException("Please Enter a valid password");
 	}
 
+	
+	
+	
+	
 	@Override
 	public String logOutFromAccount(String key) throws LoginException {
 
 		CurrentUserSession validCustomerSession = sDao.findByUuid(key);
 
 		if (validCustomerSession == null) {
-			throw new LoginException("User Not Logged In with this number");
+			throw new LoginException("User Not Logged In with this key");
 		}
 		sDao.delete(validCustomerSession);
 
-		return "Logged Out !";
+		return "Logged out!";
 
 	}
 

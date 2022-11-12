@@ -11,5 +11,6 @@ public interface LoginService {
 	public String logIntoAccount(LoginDTO ldo) throws LoginException;
 
 	public String logOutFromAccount(String key) throws LoginException;
+	
 
 }

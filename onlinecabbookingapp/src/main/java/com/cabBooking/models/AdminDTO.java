@@ -1,15 +1,9 @@
 package com.cabBooking.models;
 
-import lombok.Data;
-
-//@Data
-public class LoginDTO {
-
+public class AdminDTO {
+    
 	private String username;
 	private String password;
-	
-	
-	
 	public String getUsername() {
 		return username;
 	}
@@ -22,7 +16,5 @@ public class LoginDTO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
 	
 }
