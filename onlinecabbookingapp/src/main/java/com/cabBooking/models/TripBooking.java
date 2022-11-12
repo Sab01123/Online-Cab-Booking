@@ -28,7 +28,6 @@ public class TripBooking {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer tripBookingId;
-	private Integer customerId;
 	
 	@ManyToOne
 	private Driver driver;
@@ -102,18 +101,14 @@ public class TripBooking {
 	public void setBill(Float bill) {
 		this.bill = bill;
 	}
-	public Integer getCustomerId() {
-		return customerId;
-	}
+	
 	public Customer getCustomer() {
 		return customer;
 	}
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-	public void setCustomerId(Integer customerId) {
-		this.customerId = customerId;
-	}
+	
 	
 	
 	

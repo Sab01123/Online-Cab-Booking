@@ -54,6 +54,10 @@ public class LoginServiceImpl implements LoginService {
 			throw new LoginException("Please Enter a valid password");
 	}
 
+	
+	
+	
+	
 	@Override
 	public String logOutFromAccount(String key) throws LoginException {
 

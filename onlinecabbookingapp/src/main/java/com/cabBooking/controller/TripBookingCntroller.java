@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cabBooking.exceptions.AdminExceptions;
 import com.cabBooking.exceptions.CustomerNotFound;
 import com.cabBooking.exceptions.TripBookingException;
 import com.cabBooking.models.TripBooking;
@@ -29,19 +30,19 @@ public class TripBookingCntroller {
 	@Autowired
 	private ITripBookingServiceImpl iTBSImpl;
 	
-	@PostMapping("/bookings")
-	public ResponseEntity<TripBooking> addTrip(@RequestBody TripBooking tb) throws TripBookingException{
+	@PostMapping("/bookings/{id}")
+	public ResponseEntity<TripBooking> addTrip(@RequestBody TripBooking tb,@PathVariable("id") Integer id) throws TripBookingException, CustomerNotFound{
 		
 		
 		
-		return new ResponseEntity<TripBooking>(iTBSImpl.insertTripBooking(tb), HttpStatus.OK);
+		return new ResponseEntity<TripBooking>(iTBSImpl.insertTripBooking(tb, id), HttpStatus.OK);
 		
 	}
 	
-	@PutMapping("/bookings")
-	public ResponseEntity<TripBooking> updateTrip(@RequestBody TripBooking tb) throws TripBookingException{
+	@PutMapping("/bookings/{id}")
+	public ResponseEntity<TripBooking> updateTrip(@RequestBody TripBooking tb, @PathVariable("id") Integer id) throws TripBookingException, AdminExceptions{
 		
-		return new ResponseEntity<TripBooking>(iTBSImpl.updateTripBooking(tb), HttpStatus.ACCEPTED);
+		return new ResponseEntity<TripBooking>(iTBSImpl.updateTripBooking(tb, id), HttpStatus.ACCEPTED);
 		
 	}
     
@@ -60,16 +61,16 @@ public class TripBookingCntroller {
    
 	
 	@DeleteMapping("/bookings/{id}")
-	public ResponseEntity<TripBooking> removeTrip(@PathVariable("id") int tripiId) throws TripBookingException{
+	public ResponseEntity<TripBooking> removeTrip(@PathVariable("id") int tripiId) throws TripBookingException, AdminExceptions{
 		
 		return new ResponseEntity<TripBooking>(iTBSImpl.deleteTripBooking(tripiId), HttpStatus.OK);
 		
 	}
 	
-	@GetMapping("/trips/{id}")
-	public ResponseEntity<List<TripBooking>> getAllTripsByCustomer(@PathVariable("id") int id) throws CustomerNotFound{
+	@GetMapping("/trips/{id}/{aId}")
+	public ResponseEntity<List<TripBooking>> getAllTripsByCustomer(@PathVariable("id") int id, @PathVariable("aId") Integer aId) throws CustomerNotFound, AdminExceptions{
 		
-		return new ResponseEntity<List<TripBooking>>(iTBSImpl.viewAllTripsCustomer(id), HttpStatus.FOUND);
+		return new ResponseEntity<List<TripBooking>>(iTBSImpl.viewAllTripsCustomer(id, aId), HttpStatus.FOUND);
 		
 	}
 	
