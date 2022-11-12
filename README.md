@@ -51,9 +51,8 @@ This application is developed as a part of an Assignment for Web Application Dev
 - [@Namdev Patil](https://github.com/namdevmanoharpatil)
 - [@Sabira Farooq](https://github.com/Sab01123)
 
-                                                          ER_Diagram
-
-![Screenshot (786)](https://user-images.githubusercontent.com/104069112/201482110-55f278d1-1d1b-443c-bb83-bcbf101c6a19.png)
+##   ER_Diagram                                            
+![ER_Diagram](https://user-images.githubusercontent.com/104069112/201485913-289d5d89-fe19-4123-8852-6f0773aa9637.png)
 
 ### Installation & Run
 - Before running the API server, you have to update the database configuration inside the application.properties file
