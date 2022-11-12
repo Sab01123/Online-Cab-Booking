@@ -14,17 +14,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.cabBooking.exceptions.DriverException;
 import com.cabBooking.models.Driver;
 import com.cabBooking.models.DriverDTO;
 import com.cabBooking.services.DriverServices;
+import com.cabBooking.services.DriverServicesImpl;
 
-@Controller
+@RestController
 public class DriverContoller {
 
 	@Autowired
-	DriverServices dService;
+	DriverServicesImpl dService;
 
 	@PostMapping("/driver")
 	public ResponseEntity<Driver> addDriver(@RequestBody Driver driver) throws DriverException {
@@ -69,6 +71,13 @@ public class DriverContoller {
 
 		return new ResponseEntity<DriverDTO>(requiredDriver, HttpStatus.CREATED);
 
+	}
+
+	@GetMapping("/listOfDrivers/{id}")
+	public ResponseEntity<List<Driver>> listOfDriver(@PathVariable("id") Integer id) {
+		List<Driver> list = dService.getDriversByCabId(id);
+
+		return new ResponseEntity<List<Driver>>(list, HttpStatus.OK);
 	}
 
 }

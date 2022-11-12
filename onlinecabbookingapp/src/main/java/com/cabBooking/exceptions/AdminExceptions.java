@@ -1,6 +1,6 @@
 package com.cabBooking.exceptions;
 
-public class AdminExceptions extends RuntimeException {
+public class AdminExceptions extends Exception {
 	public AdminExceptions() {
 		// TODO Auto-generated constructor stub
 	}

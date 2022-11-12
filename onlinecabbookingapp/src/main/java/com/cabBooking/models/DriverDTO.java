@@ -1,6 +1,5 @@
 package com.cabBooking.models;
 
-
 public class DriverDTO {
 
 	private Integer driverId;
@@ -17,8 +16,7 @@ public class DriverDTO {
 	}
 
 	public DriverDTO() {
-		super();
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public int getDriverId() {

@@ -28,7 +28,7 @@ public class CustomerController {
 	private CustomerServices customerService;
 	
 	@PostMapping("/save")
-	public ResponseEntity<Customer> insertCustomersHandler(@Valid @RequestBody Customer customer) throws CustomerNotFound{
+	public ResponseEntity<Customer> insertCustomersHandler( @Valid @RequestBody Customer customer) throws CustomerNotFound{
 	Customer cus = 	customerService.insertCustomer(customer);
 	
 	return new ResponseEntity<Customer>(cus, HttpStatus.OK);
