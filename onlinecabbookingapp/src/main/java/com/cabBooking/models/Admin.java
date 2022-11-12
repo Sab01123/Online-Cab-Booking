@@ -26,6 +26,10 @@ public class Admin extends AbstractUser {
 		return adminId;
 	}
 
+	public void setAdminId(Integer adminId) {
+		this.adminId = adminId;
+	}
+
 	
 	
 	
