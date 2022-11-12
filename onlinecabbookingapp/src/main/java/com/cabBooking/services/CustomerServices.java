@@ -10,11 +10,13 @@ import com.cabBooking.models.CustomerDTO1;
 public interface CustomerServices {
 
 	public Customer insertCustomer(Customer customer)throws CustomerNotFound;
-	public Customer updateCustomer(Customer customer) throws CustomerNotFound ;
+	public Customer updateCustomer(Customer customer, Integer id) throws CustomerNotFound ;
 	public Customer deleteCustomer(Integer customerId) throws CustomerNotFound,InvalidId;
-	public List<Customer> viewCustomers()throws CustomerNotFound;
-	public Customer viewCustomerById(Integer customerId) throws InvalidId ;
-//	public Customer validateCustomer(String username, String password) throws CustomerNotFound;
-	public Customer validateCustomer(CustomerDTO1 customerdto) throws CustomerNotFound;	
+
+//	public List<Customer> viewCustomers()throws CustomerNotFound;
+	public Customer viewCustomerById(Integer customerId) throws InvalidId, CustomerNotFound;
+	public Customer validateCustomer(String username, String password) throws CustomerNotFound;
+	
+
 	
 }

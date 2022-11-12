@@ -24,51 +24,52 @@ import com.cabBooking.services.CustomerServices;
 @RestController
 
 public class CustomerController {
-     @Autowired
+	@Autowired
 	private CustomerServices customerService;
-	
+
 	@PostMapping("/save")
 	public ResponseEntity<Customer> insertCustomersHandler( @Valid @RequestBody Customer customer) throws CustomerNotFound{
-	Customer cus = 	customerService.insertCustomer(customer);
-	
-	return new ResponseEntity<Customer>(cus, HttpStatus.OK);
-		
+		Customer cus = 	customerService.insertCustomer(customer);
+
+		return new ResponseEntity<Customer>(cus, HttpStatus.OK);
+
 	}
-	
-	@PutMapping("/update/customer")
+
+	@PutMapping("/update")
 	public ResponseEntity<Customer> updateCustomerHandler(@RequestBody Customer customer) throws CustomerNotFound{
-		
-		Customer cus = customerService.updateCustomer(customer);
-		
+
+		Customer cus = customerService.updateCustomer(customer,customer.getCustomerId());
+
 		return new ResponseEntity<Customer>(cus,HttpStatus.ACCEPTED);
 	}
-	
-	
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Customer> deleteCustomerHandler(@PathVariable("id")  Integer id) throws CustomerNotFound, InvalidId{
-			
-		Customer cus = 	customerService.deleteCustomer(id);
-			
-			return new ResponseEntity<Customer>(cus, HttpStatus.OK);
-			
-	}
-	@GetMapping("/getAllCustomers")
-	public ResponseEntity<List<Customer>> getAllCustomersHandler() throws CustomerNotFound{
-		
-		List<Customer> cus = customerService.viewCustomers();
-		
-		return new ResponseEntity<List<Customer>>(cus,HttpStatus.OK);
-	}
-	
-	@GetMapping("/customer/{id}")
-	public ResponseEntity<Customer> getCustomerByIdHandler(@PathVariable("id") Integer id) throws InvalidId{
-		
-		Customer cus = 	customerService.viewCustomerById(id);
-		
-		return new ResponseEntity<Customer> (cus,HttpStatus.OK);
-		
-}
 
+
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<Customer> deleteCustomerHandler(@PathVariable("id") Integer id) throws CustomerNotFound, InvalidId{
+
+		return new ResponseEntity<Customer>(customerService.deleteCustomer(id), HttpStatus.OK);
+
+	}
+	//	@GetMapping("/getAllCustomers")
+	//	public ResponseEntity<List<Customer>> getAllCustomersHandler() throws CustomerNotFound{
+	//		
+	//		List<Customer> cus = customerService.viewCustomers();
+	//		
+	//		return new ResponseEntity<List<Customer>>(cus,HttpStatus.OK);
+	//	}
+
+	@GetMapping("/customer/{id}")
+	public ResponseEntity<Customer> getCustomerByIdHandler(@PathVariable("id") Integer id) throws InvalidId, CustomerNotFound{
+
+		Customer cus = 	customerService.viewCustomerById(id);
+
+		return new ResponseEntity<Customer> (cus,HttpStatus.OK);
+
+
+	}
+	
+	
+	
 	
 	
 	
@@ -76,10 +77,10 @@ public class CustomerController {
 	public ResponseEntity<Customer> vaildCustomerByUserName( @RequestBody CustomerDTO1 customerdto) throws CustomerNotFound{
 		Customer cus = 	customerService.validateCustomer(customerdto);
 		
+
 		return new ResponseEntity<>(cus,HttpStatus.ACCEPTED);
-		
-		
+
+
 	}
-	
-	
+
 }

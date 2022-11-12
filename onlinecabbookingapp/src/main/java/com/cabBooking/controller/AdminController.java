@@ -40,17 +40,17 @@ public class AdminController {
 	}
 	
 	
-	@PostMapping("/insert")
-	public ResponseEntity<Admin> insertAdmin(@RequestBody Admin admin, @RequestBody AdminCurrentSessionDto acsd) throws AdminExceptions{
+	@PostMapping("/insert/{key}")
+	public ResponseEntity<Admin> insertAdmin(@RequestBody Admin admin,@PathVariable("key") String key) throws AdminExceptions{
 		
-		return new ResponseEntity<Admin>(adminService.insertAdmin(admin, acsd.getKey()), HttpStatus.ACCEPTED);
+		return new ResponseEntity<Admin>(adminService.insertAdmin(admin, key), HttpStatus.ACCEPTED);
 		
 	}
 
-	@PutMapping("/update")
-	public ResponseEntity<Admin> updateAdmin(@RequestBody Admin admin, @RequestBody AdminCurrentSessionDto acsd) throws AdminExceptions{
+	@PutMapping("/update/{key}")
+	public ResponseEntity<Admin> updateAdmin(@RequestBody Admin admin, @PathVariable("key") String key) throws AdminExceptions{
 		
-		return new ResponseEntity<Admin>( adminService.updateAdmin(admin, acsd.getKey()) ,HttpStatus.ACCEPTED);
+		return new ResponseEntity<Admin>( adminService.updateAdmin(admin, key) ,HttpStatus.ACCEPTED);
 		
 	}
 	
@@ -61,10 +61,10 @@ public class AdminController {
 		
 	}
 	
-	@GetMapping("/trips")
-	public ResponseEntity<List<TripBooking>> getTrips(@RequestBody AdminCurrentSessionDto acsd) throws AdminExceptions{
+	@GetMapping("/trips/{key}")
+	public ResponseEntity<List<TripBooking>> getTrips(@PathVariable("key") String key) throws AdminExceptions{
 		
-		return new ResponseEntity<List<TripBooking>>(adminService.getAllTrips(acsd.getKey()), HttpStatus.OK);
+		return new ResponseEntity<List<TripBooking>>(adminService.getAllTrips(key), HttpStatus.OK);
 		
 	}
 	
