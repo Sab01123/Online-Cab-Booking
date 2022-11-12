@@ -6,7 +6,7 @@ This application is developed as a part of an Assignment for Web Application Dev
 
 
 
-### Tech Stack
+### Technical Stacks
 
 - Spring Boot 
 - Spring Framework
