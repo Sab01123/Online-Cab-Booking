@@ -1,5 +1,11 @@
-                                         (logo)
-                                 A-Z Cab Service Pvt.Ltd
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/104069112/201516383-6939ff92-784d-4683-b623-ec20d7d7fad7.gif" width="160" alt="animated" />
+</p>
+          
+ <p align="center">              
+- Exotic Cab Service Pvt.Ltd-
+  <p/>
+  
  #  Online Cab Booking System
 This application is developed as a part of an Assignment for Web Application Development. It is a REST API for an Online Cab Booking. This API performs all the fundamental CRUD operations of any Online Cab Booking platform with user validation at every step.
 
