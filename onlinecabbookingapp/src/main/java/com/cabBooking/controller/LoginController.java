@@ -26,8 +26,8 @@ public class LoginController {
 		
 	}
 	
-	@DeleteMapping("/logout/{key}")
-	public ResponseEntity<String> logOut(@PathVariable("key") String key) throws LoginException{
+	@DeleteMapping("/logout/{customerKey}")
+	public ResponseEntity<String> logOut(@PathVariable("customerKey") String key) throws LoginException{
 		
 		return new ResponseEntity<String>(lSImpl.logOutFromAccount(key), HttpStatus.OK);
 		

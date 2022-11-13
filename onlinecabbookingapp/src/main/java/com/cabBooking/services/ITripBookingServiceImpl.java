@@ -46,89 +46,84 @@ public class ITripBookingServiceImpl implements ITripBookingService {
 			throws TripBookingException, CustomerNotFound {
 		// TODO Auto-generated method stub
 
-		
-			boolean assigned = false;
+		boolean assigned = false;
 
-			List<Driver> drivers = dRepo.findAll();
+		List<Driver> drivers = dRepo.findAll();
 
-			for (Driver d : drivers) {
+		for (Driver d : drivers) {
 
-				Set<TripBooking> trips = d.getTripBooking();
+			Set<TripBooking> trips = d.getTripBooking();
 
-				boolean flag = false;
+			boolean flag = false;
 
-				for (TripBooking tb : trips) {
+			for (TripBooking tb : trips) {
 
-					if ((tripBooking.getFromDateTime().isAfter(tb.getFromDateTime())
-							&& tripBooking.getFromDateTime().isBefore(tb.getToDateTime()))
-							|| (tripBooking.getToDateTime().isAfter(tb.getFromDateTime())
-									&& tripBooking.getToDateTime().isBefore(tb.getToDateTime()))
-							|| tripBooking.getFromDateTime().isEqual(tb.getFromDateTime())
-							|| tripBooking.getToDateTime().isEqual(tb.getToDateTime())) {
-						if (tripBooking.getFromDateTime().toLocalDate().equals(tb.getFromDateTime().toLocalDate())) {
+				if ((tripBooking.getFromDateTime().isAfter(tb.getFromDateTime())
+						&& tripBooking.getFromDateTime().isBefore(tb.getToDateTime()))
+						|| (tripBooking.getToDateTime().isAfter(tb.getFromDateTime())
+								&& tripBooking.getToDateTime().isBefore(tb.getToDateTime()))
+						|| tripBooking.getFromDateTime().isEqual(tb.getFromDateTime())
+						|| tripBooking.getToDateTime().isEqual(tb.getToDateTime())) {
+					if (tripBooking.getFromDateTime().toLocalDate().equals(tb.getFromDateTime().toLocalDate())) {
 
-							flag = true;
-							break;
-						}
-
-					}
-
-				}
-
-				if (!flag) {
-					assigned = true;
-					Optional<Customer> cOpt = cRepo.findById(id);
-					if (cOpt.isPresent()) {
-						tripBooking.setCustomer(cOpt.get());
-						d.getTripBooking().add(tripBooking);
-						tripBooking.setDriver(d);
+						flag = true;
 						break;
-
 					}
 
-					throw new CustomerNotFound("No customer exists with the id " + id);
 				}
 
 			}
 
-			if (assigned) {
+			if (!flag) {
+				assigned = true;
+				Optional<Customer> cOpt = cRepo.findById(id);
+				if (cOpt.isPresent()) {
+					tripBooking.setCustomer(cOpt.get());
+					d.getTripBooking().add(tripBooking);
+					tripBooking.setDriver(d);
+					break;
 
-				return tbRepo.save(tripBooking);
-			} else {
-				throw new TripBookingException(
-						"No Driver is available in the time slot from " + tripBooking.getFromDateTime().toLocalTime()
-								+ " to " + tripBooking.getToDateTime().toLocalTime() + " on "
-								+ tripBooking.getFromDateTime().toLocalDate());
+				}
+
+				throw new CustomerNotFound("No customer exists with the id " + id);
 			}
-		
 
-		
+		}
+
+		if (assigned) {
+
+			return tbRepo.save(tripBooking);
+		} else {
+			throw new TripBookingException("No Driver is available in the time slot from "
+					+ tripBooking.getFromDateTime().toLocalTime() + " to " + tripBooking.getToDateTime().toLocalTime()
+					+ " on " + tripBooking.getFromDateTime().toLocalDate());
+		}
 
 	}
 
 	@Override
-	public TripBooking updateTripBooking(TripBooking tripBooking, Integer id) throws TripBookingException, AdminExceptions {
+	public TripBooking updateTripBooking(TripBooking tripBooking, Integer id)
+			throws TripBookingException, CustomerNotFound {
 		// TODO Auto-generated method stub
 
 		Optional<TripBooking> opt = tbRepo.findById(tripBooking.getTripBookingId());
 
 		if (opt.isPresent()) {
+			Optional<Customer> cOpt = cRepo.findById(id);
 
-			Optional<AdminCurrentSession> session = adminRepo.findById(id);
+			if (cOpt.isPresent()) {
 
-			if (session.isPresent()) {
-				
-                 tripBooking.setCustomer(opt.get().getCustomer());
+				tripBooking.setCustomer(opt.get().getCustomer());
 				tripBooking.setDriver(opt.get().getDriver());
 				return tbRepo.save(tripBooking);
 			}
-			throw new AdminExceptions("You are not logged in as an admin");
+			throw new CustomerNotFound("You are not logged in as Customer");
 		}
 		throw new TripBookingException("No trip is present with the id " + tripBooking.getTripBookingId());
 	}
 
 	@Override
-	public TripBooking deleteTripBooking(int tripBookingId) throws TripBookingException, AdminExceptions {
+	public TripBooking deleteTripBooking(int tripBookingId) throws TripBookingException, CustomerNotFound {
 		// TODO Auto-generated method stub
 
 		Optional<TripBooking> opt = tbRepo.findById(tripBookingId);
@@ -144,7 +139,7 @@ public class ITripBookingServiceImpl implements ITripBookingService {
 
 				return res;
 			}
-			throw new AdminExceptions("Customer is not logged in");
+			throw new CustomerNotFound("Customer is not logged in");
 		}
 
 		else
@@ -160,7 +155,8 @@ public class ITripBookingServiceImpl implements ITripBookingService {
 	}
 
 	@Override
-	public List<TripBooking> viewAllTripsCustomer(Integer customerId, Integer id) throws CustomerNotFound, AdminExceptions {
+	public List<TripBooking> viewAllTripsCustomer(Integer customerId, Integer id)
+			throws CustomerNotFound, AdminExceptions {
 		// TODO Auto-generated method stub
 		Optional<Customer> opt = cRepo.findById(customerId);
 
@@ -205,8 +201,6 @@ public class ITripBookingServiceImpl implements ITripBookingService {
 						tb.setBill(bill);
 						tbRepo.save(tb);
 					}
-					
-					
 
 					return new ArrayList<>(trips);
 				}

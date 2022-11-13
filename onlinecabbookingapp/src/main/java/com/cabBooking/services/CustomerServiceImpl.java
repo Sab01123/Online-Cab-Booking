@@ -66,7 +66,7 @@ public class CustomerServiceImpl implements CustomerServices {
 		if (cust.isPresent()) {
 
 			Optional<CurrentUserSession> opt = session.findById(customerId);
-
+			
 			if (opt.isPresent()) {
 
 				Customer c = cust.get();
@@ -122,21 +122,17 @@ public class CustomerServiceImpl implements CustomerServices {
 
 	@Override
 	public Customer validateCustomer(CustomerDTO1 customerdto) throws CustomerNotFound {
-		
+
 		List<Customer> cus = customerRepo.findAll();
 
-		for(int i=0;i<cus.size();i++) {
-			if(cus.get(i).getUsername().equals(customerdto.getUsername())&&
-					cus.get(i).getPassword().equals(customerdto.getPassword())) 
-			return	cus.get(i);
-			}
-			
-		
-			throw new CustomerNotFound("Invalid username and password");
-				
-		
-		
-		
+		for (int i = 0; i < cus.size(); i++) {
+			if (cus.get(i).getUsername().equals(customerdto.getUsername())
+					&& cus.get(i).getPassword().equals(customerdto.getPassword()))
+				return cus.get(i);
 		}
+
+		throw new CustomerNotFound("Invalid username and password");
+
+	}
 
 }

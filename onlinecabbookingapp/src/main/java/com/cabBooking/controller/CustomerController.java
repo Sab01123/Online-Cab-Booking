@@ -28,58 +28,54 @@ public class CustomerController {
 	private CustomerServices customerService;
 
 	@PostMapping("/save")
-	public ResponseEntity<Customer> insertCustomersHandler( @Valid @RequestBody Customer customer) throws CustomerNotFound{
-		Customer cus = 	customerService.insertCustomer(customer);
+	public ResponseEntity<Customer> insertCustomersHandler(@Valid @RequestBody Customer customer)
+			throws CustomerNotFound {
+		Customer cus = customerService.insertCustomer(customer);
 
 		return new ResponseEntity<Customer>(cus, HttpStatus.OK);
 
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<Customer> updateCustomerHandler(@RequestBody Customer customer) throws CustomerNotFound{
+	public ResponseEntity<Customer> updateCustomerHandler(@RequestBody Customer customer) throws CustomerNotFound {
 
-		Customer cus = customerService.updateCustomer(customer,customer.getCustomerId());
+		Customer cus = customerService.updateCustomer(customer, customer.getCustomerId());
 
-		return new ResponseEntity<Customer>(cus,HttpStatus.ACCEPTED);
+		return new ResponseEntity<Customer>(cus, HttpStatus.ACCEPTED);
 	}
 
-
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Customer> deleteCustomerHandler(@PathVariable("id") Integer id) throws CustomerNotFound, InvalidId{
+	@DeleteMapping("/delete/{customerId}")
+	public ResponseEntity<Customer> deleteCustomerHandler(@PathVariable("customerId") Integer id)
+			throws CustomerNotFound, InvalidId {
 
 		return new ResponseEntity<Customer>(customerService.deleteCustomer(id), HttpStatus.OK);
 
 	}
-	//	@GetMapping("/getAllCustomers")
-	//	public ResponseEntity<List<Customer>> getAllCustomersHandler() throws CustomerNotFound{
-	//		
-	//		List<Customer> cus = customerService.viewCustomers();
-	//		
-	//		return new ResponseEntity<List<Customer>>(cus,HttpStatus.OK);
-	//	}
+	// @GetMapping("/getAllCustomers")
+	// public ResponseEntity<List<Customer>> getAllCustomersHandler() throws
+	// CustomerNotFound{
+	//
+	// List<Customer> cus = customerService.viewCustomers();
+	//
+	// return new ResponseEntity<List<Customer>>(cus,HttpStatus.OK);
+	// }
 
-	@GetMapping("/customer/{id}")
-	public ResponseEntity<Customer> getCustomerByIdHandler(@PathVariable("id") Integer id) throws InvalidId, CustomerNotFound{
+	@GetMapping("/customer/{customerId}")
+	public ResponseEntity<Customer> getCustomerByIdHandler(@PathVariable("customerId") Integer id)
+			throws InvalidId, CustomerNotFound {
 
-		Customer cus = 	customerService.viewCustomerById(id);
+		Customer cus = customerService.viewCustomerById(id);
 
-		return new ResponseEntity<Customer> (cus,HttpStatus.OK);
-
+		return new ResponseEntity<Customer>(cus, HttpStatus.OK);
 
 	}
-	
-	
-	
-	
-	
-	
+
 	@PostMapping("/validateCustomer")
-	public ResponseEntity<Customer> vaildCustomerHandler( @RequestBody CustomerDTO1 customerdto) throws CustomerNotFound{
+	public ResponseEntity<Customer> vaildCustomerHandler(@RequestBody CustomerDTO1 customerdto)
+			throws CustomerNotFound {
 		Customer cus = customerService.validateCustomer(customerdto);
-		
 
-		return new ResponseEntity<>(cus,HttpStatus.ACCEPTED);
-
+		return new ResponseEntity<>(cus, HttpStatus.ACCEPTED);
 
 	}
 

@@ -26,59 +26,60 @@ import com.cabBooking.services.ITripBookingServiceImpl;
 
 @RestController
 public class TripBookingCntroller {
-    
+
 	@Autowired
 	private ITripBookingServiceImpl iTBSImpl;
-	
-	@PostMapping("/bookings/{id}")
-	public ResponseEntity<TripBooking> addTrip(@RequestBody TripBooking tb,@PathVariable("id") Integer id) throws TripBookingException, CustomerNotFound{
-		
-		
-		
+
+	@PostMapping("/bookings/{customerId}")
+	public ResponseEntity<TripBooking> addTrip(@RequestBody TripBooking tb, @PathVariable("customerId") Integer id)
+			throws TripBookingException, CustomerNotFound {
+
 		return new ResponseEntity<TripBooking>(iTBSImpl.insertTripBooking(tb, id), HttpStatus.OK);
-		
+
 	}
-	
+
 	@PutMapping("/bookings/{id}")
-	public ResponseEntity<TripBooking> updateTrip(@RequestBody TripBooking tb, @PathVariable("id") Integer id) throws TripBookingException, AdminExceptions{
-		
+	public ResponseEntity<TripBooking> updateTrip(@RequestBody TripBooking tb, @PathVariable("id") Integer id)
+			throws TripBookingException, CustomerNotFound {
+
 		return new ResponseEntity<TripBooking>(iTBSImpl.updateTripBooking(tb, id), HttpStatus.ACCEPTED);
-		
+
 	}
-    
-	@GetMapping("/getTrips/{id}")
-	public ResponseEntity<Set<TripBooking>> getTripsByDriver(@PathVariable("id") int id){
-		
+
+	@GetMapping("/getTrips/{driverId}")
+	public ResponseEntity<Set<TripBooking>> getTripsByDriver(@PathVariable("driverId") int id) {
+
 		Set<TripBooking> tbSet = iTBSImpl.viewTripsWithTheDriverId(id);
-		for(TripBooking tb:tbSet) {
-			
+		for (TripBooking tb : tbSet) {
+
 			System.out.println(tb.getFromDateTime().getHour());
 		}
-		
-		return new ResponseEntity<Set<TripBooking>>(iTBSImpl.viewTripsWithTheDriverId(id) , HttpStatus.FOUND);
-		
+
+		return new ResponseEntity<Set<TripBooking>>(iTBSImpl.viewTripsWithTheDriverId(id), HttpStatus.FOUND);
+
 	}
-   
-	
+
 	@DeleteMapping("/bookings/{id}")
-	public ResponseEntity<TripBooking> removeTrip(@PathVariable("id") int tripiId) throws TripBookingException, AdminExceptions{
-		
+	public ResponseEntity<TripBooking> removeTrip(@PathVariable("id") int tripiId)
+			throws TripBookingException, CustomerNotFound {
+
 		return new ResponseEntity<TripBooking>(iTBSImpl.deleteTripBooking(tripiId), HttpStatus.OK);
-		
+
 	}
-	
-	@GetMapping("/trips/{id}/{aId}")
-	public ResponseEntity<List<TripBooking>> getAllTripsByCustomer(@PathVariable("id") int id, @PathVariable("aId") Integer aId) throws CustomerNotFound, AdminExceptions{
-		
+
+	@GetMapping("/trips/{customerId}/{adminId}")
+	public ResponseEntity<List<TripBooking>> getAllTripsByCustomer(@PathVariable("customerId") int id,
+			@PathVariable("adminId") Integer aId) throws CustomerNotFound, AdminExceptions {
+
 		return new ResponseEntity<List<TripBooking>>(iTBSImpl.viewAllTripsCustomer(id, aId), HttpStatus.FOUND);
-		
+
 	}
-	
-	@GetMapping("/bill/{id}")
-	public ResponseEntity<List<TripBooking>> calculateBill(@PathVariable("id") int customerId) throws CustomerNotFound, TripBookingException{
-		
-		
+
+	@GetMapping("/bill/{customerId}")
+	public ResponseEntity<List<TripBooking>> calculateBill(@PathVariable("customerId") int customerId)
+			throws CustomerNotFound, TripBookingException {
+
 		return new ResponseEntity<List<TripBooking>>(iTBSImpl.calculateBill(customerId), HttpStatus.OK);
-		
+
 	}
 }

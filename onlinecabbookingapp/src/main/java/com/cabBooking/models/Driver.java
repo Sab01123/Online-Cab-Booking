@@ -32,7 +32,7 @@ public class Driver extends AbstractUser {
 	private String liscenceNo;
 
 	private String cabType;
-
+	
 	@ManyToOne
 	private Cab cab;
 

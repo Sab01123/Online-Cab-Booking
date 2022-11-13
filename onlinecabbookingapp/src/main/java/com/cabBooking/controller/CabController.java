@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cabBooking.exceptions.AdminExceptions;
 import com.cabBooking.exceptions.CabException;
 import com.cabBooking.models.Cab;
 import com.cabBooking.services.CabServiceImpl;
@@ -24,49 +25,49 @@ import com.cabBooking.services.CabServiceImpl;
 public class CabController {
 
 	@Autowired
-	private	CabServiceImpl service;
+	private CabServiceImpl service;
 
+	@PostMapping("/cab/{adminId}")
+	public ResponseEntity<Cab> RegisterCabHandler(@RequestBody Cab cab, @PathVariable("adminId") Integer adminId)
+			throws AdminExceptions {
 
+		Cab insertCab = service.insertCab(cab, adminId);
 
-	@PostMapping("/cab")
-	public ResponseEntity<Cab> RegisterCabHandler(@RequestBody Cab cab){
-
-		Cab insertCab = service.insertCab(cab);
-
-
-		return  new ResponseEntity<Cab>(insertCab, HttpStatus.CREATED);
+		return new ResponseEntity<Cab>(insertCab, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/cab")
-	public ResponseEntity<Cab> updateCabHandler(@RequestBody Cab cab) throws CabException{
+	@PutMapping("/cab/{adminId}")
+	public ResponseEntity<Cab> updateCabHandler(@RequestBody Cab cab, @PathVariable("adminId") Integer adminId)
+			throws CabException, AdminExceptions {
 
-		Cab updateCab = service.updateCab(cab);
-
+		Cab updateCab = service.updateCab(cab, adminId);
 
 		return new ResponseEntity<Cab>(updateCab, HttpStatus.ACCEPTED);
 	}
 
-	@DeleteMapping("/cab/{cId}")
-	public ResponseEntity<Cab> deleteCabHandler(@PathVariable("cId") Integer cabId) throws CabException{
+	@DeleteMapping("/cab/{cId}/{adminId}")
+	public ResponseEntity<Cab> deleteCabHandler(@PathVariable("cId") Integer cabId,
+			@PathVariable("adminId") Integer adminId) throws CabException, AdminExceptions {
 
-		Cab deleteCab = service.deleteCab(cabId);
+		Cab deleteCab = service.deleteCab(cabId, adminId);
 
 		return new ResponseEntity<Cab>(deleteCab, HttpStatus.OK);
 	}
 
-	@GetMapping("/cabs/{carType}")
-	public ResponseEntity<List<Cab>> viewCabsOfTypesHandler(@PathVariable("carType") String carType) throws CabException {
+	@GetMapping("/cabs/{carType}/{adminId}")
+	public ResponseEntity<List<Cab>> viewCabsOfTypesHandler(@PathVariable("carType") String carType,
+			@PathVariable("adminId") Integer adminId) throws CabException, AdminExceptions {
 
-		List<Cab> viewCabsOfTypes = service.viewCabsOfTypes(carType);
+		List<Cab> viewCabsOfTypes = service.viewCabsOfTypes(carType, adminId);
 
 		return new ResponseEntity<List<Cab>>(viewCabsOfTypes, HttpStatus.OK);
 	}
 
-	@GetMapping("/countofcabs/{carType}")
-	public ResponseEntity<Integer> countCabsOfTypeHandler(@PathVariable("carType") String carType) throws CabException {
-		Integer count = service.countCabsOfType(carType);
+	@GetMapping("/countofcabs/{carType}/{adminId}")
+	public ResponseEntity<Integer> countCabsOfTypeHandler(@PathVariable("carType") String carType,
+			@PathVariable("adminId") Integer adminId) throws CabException, AdminExceptions {
+		Integer count = service.countCabsOfType(carType, adminId);
 		return new ResponseEntity<Integer>(count, HttpStatus.OK);
 	}
-
 
 }
