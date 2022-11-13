@@ -26,9 +26,18 @@ public class Admin extends AbstractUser {
 		return adminId;
 	}
 
-	
-	
-	
-	
+	public Admin(Integer adminId) {
+		super();
+		this.adminId = adminId;
+	}
+
+	public Admin() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public void setAdminId(Integer adminId) {
+		this.adminId = adminId;
+	}
 
 }

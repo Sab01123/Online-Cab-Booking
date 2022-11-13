@@ -5,12 +5,19 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.cabBooking.exceptions.AdminExceptions;
 import com.cabBooking.exceptions.DriverException;
+import com.cabBooking.models.AdminCurrentSession;
 import com.cabBooking.models.Cab;
 import com.cabBooking.models.Driver;
 import com.cabBooking.models.DriverDTO;
+import com.cabBooking.repository.AdminCurrentSessionRepo;
 import com.cabBooking.repository.CabDao;
 import com.cabBooking.repository.DriverRepository;
+import com.cabBooking.repository.SessionDao;
+
+import net.bytebuddy.utility.RandomString;
 
 @Service
 public class DriverServicesImpl implements DriverServices {
@@ -21,63 +28,89 @@ public class DriverServicesImpl implements DriverServices {
 	@Autowired
 	private CabDao cabDao;
 
+	@Autowired
+	private AdminCurrentSessionRepo adminSession;
+
 	@Override
-	public Driver insertDriver(Driver driver) throws DriverException {
+	public Driver insertDriver(Driver driver, Integer adminId) throws DriverException, AdminExceptions {
 		// TODO Auto-generated method stub
 
-		Boolean flag = false;
-		List<Cab> cabs = cabDao.findAll();
+		Optional<AdminCurrentSession> opt = adminSession.findById(adminId);
 
-		for (Cab i : cabs) {
-			if (i.getCabType().toLowerCase().equals(driver.getCabType().toLowerCase())) {
-				driver.setCab(i);
-				i.getDrivers().add(driver);
-				flag = true;
-				break;
+		if (opt.isPresent()) {
+
+			Boolean flag = false;
+			List<Cab> cabs = cabDao.findAll();
+
+			for (Cab i : cabs) {
+				if (i.getCabType().toLowerCase().equals(driver.getCabType().toLowerCase())) {
+					driver.setCab(i);
+					i.getDrivers().add(driver);
+					flag = true;
+					break;
+				}
+
 			}
 
+			if (!flag) {
+
+				System.out.println(flag);
+				System.out.println(driver);
+				throw new DriverException("Failed To Add Driver");
+			}
+
+			driver.setLiscenceNo(RandomString.make(6));
+			Driver savedDriver = dRepo.save(driver);
+
+			return savedDriver;
+		} else {
+			throw new AdminExceptions("You Are Not Logged In As Admin");
 		}
+	}
 
-		if (!flag) {
+	@Override
+	public Driver updateDriver(Driver driver, Integer adminId) throws DriverException, AdminExceptions {
+		// TODO Auto-generated method stub
 
-			System.out.println(flag);
-			System.out.println(driver);
-			throw new DriverException("Failed To Add Driver");
-		}
-		Driver savedDriver = dRepo.save(driver);
+		Optional<AdminCurrentSession> admin = adminSession.findById(adminId);
 
-		return savedDriver;
+		if (admin.isPresent()) {
+
+			Optional<Driver> opt = dRepo.findById(driver.getDriverId());
+			if (opt.isPresent()) {
+				Driver d = opt.get();
+				driver.setCab(d.getCab());
+
+				return dRepo.save(driver);
+
+			} else {
+				throw new DriverException("No Driver Found With Driver Id:-" + driver.getDriverId());
+			}
+		} else
+			throw new AdminExceptions("You Are Not Logged In As Admin");
 
 	}
 
 	@Override
-	public Driver updateDriver(Driver driver) throws DriverException {
+	public Driver deleteDriver(int driverID, Integer adminId) throws DriverException, AdminExceptions {
 		// TODO Auto-generated method stub
 
-		Optional<Driver> opt = dRepo.findById(driver.getDriverId());
-		if (opt.isPresent()) {
+		Optional<AdminCurrentSession> admin = adminSession.findById(adminId);
 
-			return dRepo.save(driver);
+		if (admin.isPresent()) {
 
+			Optional<Driver> opt = dRepo.findById(driverID);
+			if (opt.isPresent()) {
+				Driver driver = opt.get();
+				dRepo.delete(driver);
+
+				return driver;
+
+			} else {
+				throw new DriverException("No Driver Found With Driver Id:-" + driverID);
+			}
 		} else {
-			throw new DriverException("No Driver Found With Driver Id:-" + driver.getDriverId());
-		}
-
-	}
-
-	@Override
-	public Driver deleteDriver(int driverID) throws DriverException {
-		// TODO Auto-generated method stub
-
-		Optional<Driver> opt = dRepo.findById(driverID);
-		if (opt.isPresent()) {
-			Driver driver = opt.get();
-			dRepo.delete(driver);
-
-			return driver;
-
-		} else {
-			throw new DriverException("No Driver Found With Driver Id:-" + driverID);
+			throw new AdminExceptions("You Are Not Logged In As Admin");
 		}
 
 	}
@@ -101,25 +134,32 @@ public class DriverServicesImpl implements DriverServices {
 	}
 
 	@Override
-	public DriverDTO viewDriver(int driverId) throws DriverException {
+	public DriverDTO viewDriver(int driverId, Integer adminId) throws DriverException, AdminExceptions {
 
-		DriverDTO driver = dRepo.getDriver(driverId);
-		if (driver != null) {
+		Optional<AdminCurrentSession> admin = adminSession.findById(adminId);
 
-			return driver;
+		if (admin.isPresent()) {
 
+			DriverDTO driver = dRepo.getDriver(driverId);
+			if (driver != null) {
+
+				return driver;
+
+			} else {
+				throw new DriverException("No Driver Found With Driver Id:-" + driverId);
+			}
 		} else {
-			throw new DriverException("No Driver Found With Driver Id:-" + driverId);
+			throw new AdminExceptions("You Are Not Logged In As Admin");
 		}
 
 	}
-
-	public List<Driver> getDriversByCabId(Integer cabId) {
-
-		Optional<Cab> cab = cabDao.findById(cabId);
-
-		return cab.get().getDrivers();
-		
-	}
+//
+//	public List<Driver> getDriversByCabId(Integer cabId) {
+//
+//		Optional<Cab> cab = cabDao.findById(cabId);
+//
+//		return cab.get().getDrivers();
+//
+//	}
 
 }

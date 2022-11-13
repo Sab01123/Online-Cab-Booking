@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cabBooking.exceptions.AdminExceptions;
 import com.cabBooking.exceptions.DriverException;
 import com.cabBooking.models.Driver;
 import com.cabBooking.models.DriverDTO;
@@ -28,28 +29,31 @@ public class DriverContoller {
 	@Autowired
 	DriverServicesImpl dService;
 
-	@PostMapping("/driver")
-	public ResponseEntity<Driver> addDriver(@RequestBody Driver driver) throws DriverException {
+	@PostMapping("/driver/{adminId}")
+	public ResponseEntity<Driver> addDriver(@RequestBody Driver driver, @PathVariable("adminId") Integer adminId)
+			throws DriverException, AdminExceptions {
 
-		Driver newDriver = dService.insertDriver(driver);
+		Driver newDriver = dService.insertDriver(driver, adminId);
 
 		return new ResponseEntity<Driver>(newDriver, HttpStatus.CREATED);
 
 	}
 
-	@PutMapping("/driver")
-	public ResponseEntity<Driver> updateDriver(@RequestBody Driver driver) throws DriverException {
+	@PutMapping("/driver/{adminId}")
+	public ResponseEntity<Driver> updateDriver(@RequestBody Driver driver, @PathVariable("adminId") Integer adminId)
+			throws DriverException, AdminExceptions {
 
-		Driver newDriver = dService.updateDriver(driver);
+		Driver newDriver = dService.updateDriver(driver, adminId);
 
 		return new ResponseEntity<Driver>(newDriver, HttpStatus.OK);
 
 	}
 
-	@DeleteMapping("/driver/{driverId}")
-	public ResponseEntity<Driver> deleteDriver(@PathVariable("driverId") int driverID) throws DriverException {
+	@DeleteMapping("/driver/{driverId}/{adminId}")
+	public ResponseEntity<Driver> deleteDriver(@PathVariable("driverId") int driverID,
+			@PathVariable("adminId") Integer adminId) throws DriverException, AdminExceptions {
 
-		Driver newDriver = dService.deleteDriver(driverID);
+		Driver newDriver = dService.deleteDriver(driverID, adminId);
 
 		return new ResponseEntity<Driver>(newDriver, HttpStatus.OK);
 
@@ -64,20 +68,21 @@ public class DriverContoller {
 
 	}
 
-	@GetMapping("/driver/{id}")
-	public ResponseEntity<DriverDTO> getDriver(@PathVariable("id") int Driverid) throws DriverException {
+	@GetMapping("/driver/{driverId}/{adminId}")
+	public ResponseEntity<DriverDTO> getDriver(@PathVariable("driverId") int Driverid,
+			@PathVariable("adminId") int adminId) throws DriverException, AdminExceptions {
 
-		DriverDTO requiredDriver = dService.viewDriver(Driverid);
+		DriverDTO requiredDriver = dService.viewDriver(Driverid, adminId);
 
 		return new ResponseEntity<DriverDTO>(requiredDriver, HttpStatus.CREATED);
 
 	}
 
-	@GetMapping("/listOfDrivers/{id}")
-	public ResponseEntity<List<Driver>> listOfDriver(@PathVariable("id") Integer id) {
-		List<Driver> list = dService.getDriversByCabId(id);
-
-		return new ResponseEntity<List<Driver>>(list, HttpStatus.OK);
-	}
+//	@GetMapping("/listOfDrivers/{id}")
+//	public ResponseEntity<List<Driver>> listOfDriver(@PathVariable("id") Integer id) {
+//		List<Driver> list = dService.getDriversByCabId(id);
+//
+//		return new ResponseEntity<List<Driver>>(list, HttpStatus.OK);
+//	}
 
 }
