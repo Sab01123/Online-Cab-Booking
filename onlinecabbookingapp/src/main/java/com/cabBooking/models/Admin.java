@@ -13,8 +13,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 @PrimaryKeyJoinColumn(name = "adminId")
 public class Admin extends AbstractUser {
 

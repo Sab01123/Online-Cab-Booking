@@ -84,9 +84,9 @@ public class AdminServiceImp implements AdminService {
 	
 	
 	@Override
-	public Admin insertAdmin(Admin admin, String key) throws AdminExceptions {
+	public Admin insertAdmin(Admin admin, Integer id) throws AdminExceptions {
 		
-		if(adminSessionRepo.findByAdminKey(key)!=null) {
+		if(adminSessionRepo.findById(id).get()!=null) {
 			
 			if(adminDao.findByUsername(admin.getUsername())==null) {
 				
@@ -97,14 +97,14 @@ public class AdminServiceImp implements AdminService {
 			
 		}
 			
-			throw new AdminExceptions("No current admin session exixts with the key "+key);
+			throw new AdminExceptions("No current admin session exixts with the id "+id);
 		
 	}
 
 	@Override
-	public Admin updateAdmin(Admin admin, String key) throws AdminExceptions {
+	public Admin updateAdmin(Admin admin, Integer id) throws AdminExceptions {
 		
-		if(adminSessionRepo.findByAdminKey(key)!=null) {
+		if(adminSessionRepo.findById(id).get()!=null) {
 
 			Optional<Admin> opt = adminDao.findById(admin.getAdminId());
 			if(opt.isPresent()) {
@@ -127,7 +127,7 @@ public class AdminServiceImp implements AdminService {
 			
 			throw new AdminExceptions("No admin exists with this Id");
 		}
-		throw new AdminExceptions("No admin current session exists with the key "+key);
+		throw new AdminExceptions("No admin current session exists with the id "+id);
 		
 	}
 
@@ -155,10 +155,10 @@ public class AdminServiceImp implements AdminService {
 	
 
 	@Override
-	public List<TripBooking> getAllTrips(String key) throws AdminExceptions {
+	public List<TripBooking> getAllTrips(Integer id) throws AdminExceptions {
 
 		
-		if(adminSessionRepo.findByAdminKey(key)!=null) {
+		if(adminSessionRepo.findById(id).get()!=null) {
 			
 			List<TripBooking> trips = tripRepo.findAll();
 			
@@ -170,13 +170,13 @@ public class AdminServiceImp implements AdminService {
 			throw new AdminExceptions("No trip is booked");
 			
 		}
-		throw new AdminExceptions("No current session of admin exixts with the key "+key);
+		throw new AdminExceptions("No current session of admin exixts with the id "+id);
 	}
 
 	@Override
-	public List<TripBooking> getTripsCabwise(String cabType, String key) throws TripBookingException, AdminExceptions {
+	public List<TripBooking> getTripsCabwise(String cabType, Integer id) throws TripBookingException, AdminExceptions {
 	
-		if(adminSessionRepo.findByAdminKey(key)!=null){
+		if(adminSessionRepo.findById(id).get()!=null){
 			
 			List<Cab> cabs = cabDao.findByCabType(cabType.toLowerCase());
 			
@@ -202,14 +202,14 @@ public class AdminServiceImp implements AdminService {
 			return res;
 		}
 		
-		throw new AdminExceptions("No current session of admin exixts with the key "+key);
+		throw new AdminExceptions("No current session of admin exixts with the id "+id);
 	}
 
 	@Override
-	public List<TripBooking> getTripsCustomerwise(Integer customerId, String key) throws CustomerNotFound, AdminExceptions{
+	public List<TripBooking> getTripsCustomerwise(Integer customerId, Integer adminId) throws CustomerNotFound, AdminExceptions{
 	
 		
-		if(adminSessionRepo.findByAdminKey(key)!=null){
+		if(adminSessionRepo.findById(adminId).get()!=null){
 			
 			Optional<Customer> opt = customerRepo.findById(customerId);
 			
@@ -223,14 +223,14 @@ public class AdminServiceImp implements AdminService {
 			throw new CustomerNotFound("No customer found with id "+customerId);
 		}
 		
-		throw new AdminExceptions("No current session of admin exixts with the key "+key);
+		throw new AdminExceptions("No current session of admin exixts with the id "+adminId);
      
 	}
 
 	@Override
-	public List<TripBooking> getTripsDatewise(LocalDate date, String key) throws AdminExceptions, TripBookingException {
+	public List<TripBooking> getTripsDatewise(LocalDate date, Integer adminId) throws AdminExceptions, TripBookingException {
 
-if(adminSessionRepo.findByAdminKey(key)!=null){
+if(adminSessionRepo.findById(adminId).get()!=null){
 			
 			List<TripBooking> trips = tripRepo.findAll();
 			
@@ -258,16 +258,16 @@ if(adminSessionRepo.findByAdminKey(key)!=null){
 		
 		
 		
-		throw new AdminExceptions("No current session of admin exixts with the key "+key);
+		throw new AdminExceptions("No current session of admin exixts with the id "+adminId);
 	}
 
 
 	@Override
-	public List<TripBooking> getAllTripsForDays(Integer customerId, LocalDate date, String key)
+	public List<TripBooking> getAllTripsForDays(Integer customerId, LocalDate date, Integer adminId)
 			throws AdminExceptions, TripBookingException {
 		// TODO Auto-generated method stub
 		
-		if(adminSessionRepo.findByAdminKey(key)!=null){
+		if(adminSessionRepo.findById(adminId).get()!=null){
 			
 		  List<TripBooking> trips = tripRepo.findAllTripsByCustomerId(customerId);
 		  List<TripBooking> res = new ArrayList<>();
@@ -286,7 +286,7 @@ if(adminSessionRepo.findByAdminKey(key)!=null){
 		throw new TripBookingException("No trip found on "+date+" for customer with customer id "+customerId);
 		}
 		
-		throw new AdminExceptions("No current session of admin exixts with the key "+key);
+		throw new AdminExceptions("No current session of admin exixts with the id "+adminId);
 	}
 
 

@@ -15,23 +15,23 @@ public interface AdminService {
 	
 	public AdminCurrentSession LoginAdmin(AdminDTO admin) throws AdminExceptions;
 	
-	public Admin insertAdmin(Admin admin, String key) throws AdminExceptions;
+	public Admin insertAdmin(Admin admin, Integer id) throws AdminExceptions;
 
 	
 
 	public Admin deleteAdmin(Integer id, String key) throws AdminExceptions;
 
-	public List<TripBooking> getAllTrips(String key) throws AdminExceptions;
+	public List<TripBooking> getAllTrips(Integer id) throws AdminExceptions;
 
-	public List<TripBooking> getTripsCabwise(String cabType, String key) throws TripBookingException, AdminExceptions;
+	public List<TripBooking> getTripsCabwise(String cabType, Integer adminId) throws TripBookingException, AdminExceptions;
 
-	public List<TripBooking> getTripsCustomerwise(Integer id, String key)throws CustomerNotFound, AdminExceptions;
+	public List<TripBooking> getTripsCustomerwise(Integer id, Integer adminId)throws CustomerNotFound, AdminExceptions;
 
-	public List<TripBooking> getTripsDatewise(LocalDate date, String key) throws AdminExceptions, TripBookingException;
+	public List<TripBooking> getTripsDatewise(LocalDate date, Integer adminId) throws AdminExceptions, TripBookingException;
 
-	public List<TripBooking> getAllTripsForDays(Integer customerId, LocalDate date, String key) throws AdminExceptions, TripBookingException;
+	public List<TripBooking> getAllTripsForDays(Integer customerId, LocalDate date, Integer adminId) throws AdminExceptions, TripBookingException;
 		
 
-	public Admin updateAdmin(Admin admin, String key) throws AdminExceptions;
+	public Admin updateAdmin(Admin admin, Integer id) throws AdminExceptions;
 
 }

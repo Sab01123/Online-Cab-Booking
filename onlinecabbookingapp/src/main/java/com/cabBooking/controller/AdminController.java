@@ -39,19 +39,19 @@ public class AdminController {
 
 	}
 
-	@PostMapping("/insert/{adminKey}")
-	public ResponseEntity<Admin> insertAdmin(@RequestBody Admin admin, @PathVariable("adminKey") String key)
+	@PostMapping("/insert/{adminId}")
+	public ResponseEntity<Admin> insertAdmin(@RequestBody Admin admin, @PathVariable("adminId") Integer adminId)
 			throws AdminExceptions {
 
-		return new ResponseEntity<Admin>(adminService.insertAdmin(admin, key), HttpStatus.ACCEPTED);
+		return new ResponseEntity<Admin>(adminService.insertAdmin(admin, adminId), HttpStatus.ACCEPTED);
 
 	}
 
-	@PutMapping("/update/{adminKey}")
-	public ResponseEntity<Admin> updateAdmin(@RequestBody Admin admin, @PathVariable("adminKey") String key)
+	@PutMapping("/update/{adminId}")
+	public ResponseEntity<Admin> updateAdmin(@RequestBody Admin admin, @PathVariable("adminId") Integer adminId)
 			throws AdminExceptions {
 
-		return new ResponseEntity<Admin>(adminService.updateAdmin(admin, key), HttpStatus.ACCEPTED);
+		return new ResponseEntity<Admin>(adminService.updateAdmin(admin, adminId), HttpStatus.ACCEPTED);
 
 	}
 
@@ -63,49 +63,49 @@ public class AdminController {
 
 	}
 
-	@GetMapping("/trips/{adminKey}")
-	public ResponseEntity<List<TripBooking>> getTrips(@PathVariable("adminKey") String key) throws AdminExceptions {
+	@GetMapping("/trips/{adminId}")
+	public ResponseEntity<List<TripBooking>> getTrips(@PathVariable("adminId") Integer adminId) throws AdminExceptions {
 
-		return new ResponseEntity<List<TripBooking>>(adminService.getAllTrips(key), HttpStatus.OK);
+		return new ResponseEntity<List<TripBooking>>(adminService.getAllTrips(adminId), HttpStatus.OK);
 
 	}
 
-	@GetMapping("/tripsByCab/{type}")
+	@GetMapping("/tripsByCab/{type}/{adminId}")
 	public ResponseEntity<List<TripBooking>> getTripsByCabType(@PathVariable("type") String type,
-			@RequestBody AdminCurrentSessionDto acsd) throws AdminExceptions, TripBookingException {
+			@PathVariable("id") Integer adminId) throws AdminExceptions, TripBookingException {
 
-		return new ResponseEntity<List<TripBooking>>(adminService.getTripsCabwise(type, acsd.getKey()), HttpStatus.OK);
+		return new ResponseEntity<List<TripBooking>>(adminService.getTripsCabwise(type, adminId), HttpStatus.OK);
 
 	}
 
-	@GetMapping("/tripsByDate/{date}")
+	@GetMapping("/tripsByDate/{date}/{adminId}")
 	public ResponseEntity<List<TripBooking>> getTripsByDate(@PathVariable("date") String date,
-			@RequestBody AdminCurrentSessionDto acsd) throws AdminExceptions, TripBookingException {
+			@PathVariable("adminId") Integer adminId) throws AdminExceptions, TripBookingException {
 
 		LocalDate realDate = LocalDate.parse(date);
 
-		return new ResponseEntity<List<TripBooking>>(adminService.getTripsDatewise(realDate, acsd.getKey()),
+		return new ResponseEntity<List<TripBooking>>(adminService.getTripsDatewise(realDate, adminId),
 				HttpStatus.OK);
 
 	}
 
-	@GetMapping("/tripsByCustomer/{adminId}")
-	public ResponseEntity<List<TripBooking>> getTripsByDate(@PathVariable("adminId") Integer id,
-			@RequestBody AdminCurrentSessionDto acsd) throws AdminExceptions, TripBookingException, CustomerNotFound {
+	@GetMapping("/tripsByCustomer/{customerId}/{adminId}")
+	public ResponseEntity<List<TripBooking>> getTripsByDate(@PathVariable("customerId") Integer customerId,
+			@PathVariable("adminId") Integer adminId) throws AdminExceptions, TripBookingException, CustomerNotFound {
 
-		return new ResponseEntity<List<TripBooking>>(adminService.getTripsCustomerwise(id, acsd.getKey()),
+		return new ResponseEntity<List<TripBooking>>(adminService.getTripsCustomerwise(customerId, adminId),
 				HttpStatus.OK);
 
 	}
 
-	@GetMapping("/tripsByCustomer/{adminId}/{date}")
-	public ResponseEntity<List<TripBooking>> getTripsByDateWithCustomer(@PathVariable("adminId") Integer id,
-			@PathVariable("date") String date, @RequestBody AdminCurrentSessionDto acsd)
+	@GetMapping("/tripsByCustomer/{customerId}/{adminId}/{date}")
+	public ResponseEntity<List<TripBooking>> getTripsByDateWithCustomer(@PathVariable("customerId") Integer customerId,
+			@PathVariable("date") String date, @PathVariable("adminId") Integer adminId)
 			throws AdminExceptions, TripBookingException, CustomerNotFound {
 
 		LocalDate realDate = LocalDate.parse(date);
 
-		return new ResponseEntity<List<TripBooking>>(adminService.getAllTripsForDays(id, realDate, acsd.getKey()),
+		return new ResponseEntity<List<TripBooking>>(adminService.getAllTripsForDays(customerId, realDate, adminId),
 				HttpStatus.OK);
 
 	}
