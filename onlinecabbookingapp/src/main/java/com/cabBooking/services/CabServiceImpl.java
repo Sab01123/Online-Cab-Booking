@@ -96,19 +96,19 @@ public class CabServiceImpl implements CabService {
 	}
 
 	@Override
-	public int countCabsOfType(String carType, Integer adminId) throws CabException, AdminExceptions {
+	public List<Cab> countTotalNoOfCabs(Integer adminId) throws CabException, AdminExceptions {
 
 		Optional<AdminCurrentSession> opt = adminSession.findById(adminId);
 
 		if (opt.isPresent()) {
 
-			List<Cab> cabList = dao.findByCabType(carType);
+			List<Cab> cabList = dao.findAll();
 
 			if (cabList.size() == 0)
-				throw new CabException("Sorry, no number of Cabs found with type: " + carType);
+				throw new CabException("Sorry, There are no cabs available currently! " );
 			else
 
-				return cabList.size();
+				return cabList;
 		}
 		throw new AdminExceptions("You are not logged in as Admin");
 

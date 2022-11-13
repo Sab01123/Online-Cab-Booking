@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cabBooking.exceptions.AdminExceptions;
 import com.cabBooking.exceptions.CustomerNotFound;
+import com.cabBooking.exceptions.DriverException;
 import com.cabBooking.exceptions.TripBookingException;
 import com.cabBooking.models.TripBooking;
+import com.cabBooking.models.AdminCurrentSessionDto;
 import com.cabBooking.models.Driver;
 import com.cabBooking.services.ITripBookingServiceImpl;
 
@@ -46,16 +48,10 @@ public class TripBookingCntroller {
 
 	}
 
-	@GetMapping("/getTrips/{driverId}")
-	public ResponseEntity<Set<TripBooking>> getTripsByDriver(@PathVariable("driverId") int id) {
+	@GetMapping("/getTrips/{driverId}/{adminId}")
+	public ResponseEntity<Set<TripBooking>> getTripsByDriver(@PathVariable("driverId") int id,@PathVariable("adminId")Integer adminId) throws AdminExceptions, DriverException {
 
-		Set<TripBooking> tbSet = iTBSImpl.viewTripsWithTheDriverId(id);
-		for (TripBooking tb : tbSet) {
-
-			System.out.println(tb.getFromDateTime().getHour());
-		}
-
-		return new ResponseEntity<Set<TripBooking>>(iTBSImpl.viewTripsWithTheDriverId(id), HttpStatus.FOUND);
+		return new ResponseEntity<Set<TripBooking>>(iTBSImpl.viewTripsWithTheDriverId(id, adminId), HttpStatus.FOUND);
 
 	}
 

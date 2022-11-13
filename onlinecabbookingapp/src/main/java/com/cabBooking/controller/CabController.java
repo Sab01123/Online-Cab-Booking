@@ -63,11 +63,11 @@ public class CabController {
 		return new ResponseEntity<List<Cab>>(viewCabsOfTypes, HttpStatus.OK);
 	}
 
-	@GetMapping("/countofcabs/{carType}/{adminId}")
-	public ResponseEntity<Integer> countCabsOfTypeHandler(@PathVariable("carType") String carType,
-			@PathVariable("adminId") Integer adminId) throws CabException, AdminExceptions {
-		Integer count = service.countCabsOfType(carType, adminId);
-		return new ResponseEntity<Integer>(count, HttpStatus.OK);
+	@GetMapping("/countofcabs/{adminId}")
+	public ResponseEntity<List<Cab>> getAllCabs(@PathVariable("adminId") Integer adminId)
+			throws CabException, AdminExceptions {
+		List<Cab> listOfCabs = service.countTotalNoOfCabs(adminId);
+		return new ResponseEntity<List<Cab>>(listOfCabs, HttpStatus.OK);
 	}
 
 }

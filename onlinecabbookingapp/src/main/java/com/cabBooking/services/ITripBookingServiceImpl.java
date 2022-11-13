@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.cabBooking.exceptions.AdminExceptions;
 import com.cabBooking.exceptions.CustomerNotFound;
+import com.cabBooking.exceptions.DriverException;
 import com.cabBooking.exceptions.TripBookingException;
 import com.cabBooking.models.AdminCurrentSession;
+import com.cabBooking.models.AdminCurrentSessionDto;
 import com.cabBooking.models.CurrentUserSession;
 import com.cabBooking.models.Customer;
 import com.cabBooking.models.Driver;
@@ -146,12 +148,21 @@ public class ITripBookingServiceImpl implements ITripBookingService {
 			throw new TripBookingException("No trip exixts with this Id");
 	}
 
-	public Set<TripBooking> viewTripsWithTheDriverId(int driverId) {
+	public Set<TripBooking> viewTripsWithTheDriverId(int driverId, Integer adminId)
+			throws AdminExceptions, DriverException {
 
-		Optional<Driver> opt = dRepo.findById(driverId);
+		if (adminRepo.findById(adminId).isPresent()) {
 
-		return opt.get().getTripBooking();
+			Optional<Driver> opt = dRepo.findById(driverId);
+			if (opt.isPresent()) {
 
+				return opt.get().getTripBooking();
+			} else {
+				throw new DriverException("No Driver Found With Driver Id:-" + driverId);
+			}
+
+		}
+		throw new AdminExceptions("You Are Not Logged In As Admin");
 	}
 
 	@Override
