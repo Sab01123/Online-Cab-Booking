@@ -48,15 +48,6 @@ This application is developed as a part of an Assignment for Web Application Dev
     * Cab Driver can mark their availability according to the trips status
     * Cab Driver can end the trip and application generates a bill for the trip
 
-#### This project is developed by team of 5 Back-End Developers during project week at Masai School
-### Contributor
-
-- [@Prateek Chauhan](https://github.com/PRA3EEK)
-- [@Shreyas Vilas Medade](https://github.com/medadeshreyas)
-- [@Ujjawal Prakash](https://github.com/ujjawalyt)
-- [@Namdev Patil](https://github.com/namdevmanoharpatil)
-- [@Sabira Farooq](https://github.com/Sab01123)
-
 ##   ER_Diagram                                            
 ![ER_Diagram](https://user-images.githubusercontent.com/104069112/201485913-289d5d89-fe19-4123-8852-6f0773aa9637.png)
 
@@ -121,3 +112,19 @@ This application is developed as a part of an Assignment for Web Application Dev
 * `GET /cabs/{carType}` : Gets the list of cabs on the basis of cab type
 * `GET /countofcabs/{carType}` : Gets the total number of cabs on the basis of cab type
 
+### Book a Trip
+
+
+![Screenshot (793)](https://user-images.githubusercontent.com/104069112/201608930-22b7f222-9723-40a2-b3dc-c76b4a95e542.png)
+
+
+#### This project is developed by team of 5 Back-End Developers during project week at Masai School
+### Contributor
+
+- [@Prateek Chauhan](https://github.com/PRA3EEK)
+- [@Shreyas Vilas Medade](https://github.com/medadeshreyas)
+- [@Ujjawal Prakash](https://github.com/ujjawalyt)
+- [@Namdev Patil](https://github.com/namdevmanoharpatil)
+- [@Sabira Farooq](https://github.com/Sab01123)
+#### For any feedback, report, suggestions, you can contact with anyone of the team member
+### THANK YOU
