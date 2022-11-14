@@ -119,7 +119,7 @@ This application is developed as a part of an Assignment for Web Application Dev
 
 
 #### This project is developed by team of 5 Back-End Developers during project week at Masai School
-### Contributor
+### Contributors
 
 - [@Prateek Chauhan](https://github.com/PRA3EEK)
 - [@Shreyas Vilas Medade](https://github.com/medadeshreyas)
