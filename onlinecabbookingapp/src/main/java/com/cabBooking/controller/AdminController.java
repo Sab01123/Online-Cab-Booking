@@ -72,7 +72,7 @@ public class AdminController {
 
 	@GetMapping("/tripsByCab/{type}/{adminId}")
 	public ResponseEntity<List<TripBooking>> getTripsByCabType(@PathVariable("type") String type,
-			@PathVariable("id") Integer adminId) throws AdminExceptions, TripBookingException {
+			@PathVariable("adminId") Integer adminId) throws AdminExceptions, TripBookingException {
 
 		return new ResponseEntity<List<TripBooking>>(adminService.getTripsCabwise(type, adminId), HttpStatus.OK);
 

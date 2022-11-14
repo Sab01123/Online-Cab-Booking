@@ -12,7 +12,7 @@ import com.cabBooking.models.TripBooking;
 @Repository
 public interface TripBookingRepository extends JpaRepository<TripBooking, Integer>{
 
-	@Query("from TripBooking where customerId=?1")
+	@Query("from TripBooking where customer_customer_id=?1")
 	public List<TripBooking> findAllTripsByCustomerId(int id);
 	
 }

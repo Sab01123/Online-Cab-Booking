@@ -176,7 +176,7 @@ public class AdminServiceImp implements AdminService {
 	@Override
 	public List<TripBooking> getTripsCabwise(String cabType, Integer id) throws TripBookingException, AdminExceptions {
 	
-		if(adminSessionRepo.findById(id).get()!=null){
+		if(adminSessionRepo.findById(id).isPresent()){
 			
 			List<Cab> cabs = cabDao.findByCabType(cabType.toLowerCase());
 			
@@ -209,7 +209,7 @@ public class AdminServiceImp implements AdminService {
 	public List<TripBooking> getTripsCustomerwise(Integer customerId, Integer adminId) throws CustomerNotFound, AdminExceptions{
 	
 		
-		if(adminSessionRepo.findById(adminId).get()!=null){
+		if(adminSessionRepo.findById(adminId).isPresent()){
 			
 			Optional<Customer> opt = customerRepo.findById(customerId);
 			
@@ -230,7 +230,7 @@ public class AdminServiceImp implements AdminService {
 	@Override
 	public List<TripBooking> getTripsDatewise(LocalDate date, Integer adminId) throws AdminExceptions, TripBookingException {
 
-if(adminSessionRepo.findById(adminId).get()!=null){
+if(adminSessionRepo.findById(adminId).isPresent()){
 			
 			List<TripBooking> trips = tripRepo.findAll();
 			
@@ -267,7 +267,7 @@ if(adminSessionRepo.findById(adminId).get()!=null){
 			throws AdminExceptions, TripBookingException {
 		// TODO Auto-generated method stub
 		
-		if(adminSessionRepo.findById(adminId).get()!=null){
+		if(adminSessionRepo.findById(adminId).isPresent()){
 			
 		  List<TripBooking> trips = tripRepo.findAllTripsByCustomerId(customerId);
 		  List<TripBooking> res = new ArrayList<>();
